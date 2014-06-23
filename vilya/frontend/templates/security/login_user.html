@@ -1,0 +1,20 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  {% from "security/_macros.html" import render_field_errors, render_field %}
+  <form class="form-signin" role="form" action="{{ url_for_security('login') }}" method="POST" name="login_user_form">
+      <h2 class="form-signin-heading">Log In</h2>
+      {{ login_user_form.hidden_tag() }}
+      <input type="text" name="email" class="form-control" placeholder="Email address" required="" autofocus="">
+      <input type="password" name="password" class="form-control" placeholder="Password" required="">
+      <label class="checkbox">
+          <input type="checkbox" name="remember" value="remember-me">
+          <p> Remember Me | <a href="/"> Lost Password</a></p>
+      </label>
+      {{ render_field(login_user_form.next) }}
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+      <p class="back"><a href="/">Back to CODE</a></p>
+  </form>
+{% endblock %}
+
+

@@ -1,0 +1,11 @@
+{% extends "layouts/base.html" %}
+
+{% block title -%}
+{{ user.name }}
+{%- endblock %}
+
+{% block content %}
+{% for p in projects %}
+{{ p.name }}
+{% endfor %}
+{% endblock %}
