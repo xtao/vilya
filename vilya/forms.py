@@ -1,3 +1,4 @@
 # -*- coding: utf-8 -*-
 
 from .projects.forms import *
+from .issues.forms import *

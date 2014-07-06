@@ -4,5 +4,5 @@ from ..core import Service
 from .models import Project
 
 
-class ProjectService(Service):
+class ProjectsService(Service):
     __model__ = Project

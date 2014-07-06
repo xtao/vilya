@@ -1,8 +1,11 @@
-{% extends "layouts/base.html" %}
+{% extends "projects/base.html" %}
 
 {% block title -%}
-{{ p.name }}
+{{ project.name }}
 {%- endblock %}
 
-{% block content %}
+{% block sub_content %}
+<div class="row">
+{{ project.name }}
+</div>
 {% endblock %}

@@ -1,0 +1,17 @@
+{% extends "layouts/base.html" %}
+
+{% block title -%}
+{{ project.name }}
+{%- endblock %}
+
+{% block content %}
+<div class="col-sm-2">
+<ul class="nav nav-pills nav-stacked">
+    <li class="active"><a href="/{{project.full_name}}/issues">Issue</a></li>
+</ul>
+</div>
+<div class="col-sm-10">
+{% block sub_content %}{% endblock %}
+</div>
+{% endblock %}
+

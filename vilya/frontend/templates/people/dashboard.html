@@ -1,0 +1,20 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<div class="col-xs-12 col-sm-9">
+  <h1>News feed</h1>
+  <div>
+    <a href="#" class="btn-add-store btn btn-primary">More</a>
+  </div>
+</div>
+<div class="col-xs-6 col-sm-3">
+  <div class="panel panel-default">
+    <div class="panel-heading">Projects</div>
+    <div class="list-group">
+    {% for p in projects %}
+      <a class="list-group-item" href="/{{p.full_name}}">{{ p.name }}</a>
+    {% endfor %}
+    </div>
+    </div>
+</div>
+{% endblock %}

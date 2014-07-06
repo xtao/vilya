@@ -6,7 +6,7 @@ from flask import (Blueprint,
                    redirect,
                    url_for)
 from flask.ext.login import current_user
-from ..services import projects
+from ..services import projects, users
 from ..forms import NewProjectForm
 from . import route
 
@@ -35,4 +35,7 @@ def create():
 
 @route(bp, '/<u_name>/<p_name>')
 def index(u_name, p_name):
-    return render_template('projects/index.html')
+    context = {}
+    p_user = users.first(name=u_name)
+    context['project'] = projects.first(name=p_name, owner_id=p_user.id)
+    return render_template('projects/index.html', **context)
