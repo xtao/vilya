@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask_mail import Mail
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy, sqlalchemy
 from flask_security import Security
 
 #: Flask-SQLAlchemy extension instance
@@ -145,3 +145,15 @@ class Service(object):
         self._isinstance(model)
         db.session.delete(model)
         db.session.commit()
+
+    @classmethod
+    def transaction(cls, func):
+        def transaction_block(*args, **kwargs):
+            try:
+                ret = func(*args, **kwargs)
+                db.session.commit()
+            except sqlalchemy.exc.IntegrityError:
+                db.session.rollback()
+                ret = None
+            return ret
+        return transaction_block

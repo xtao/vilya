@@ -56,11 +56,10 @@ def create():
     project = g.project
     form = NewIssueForm()
     if form.validate_on_submit():
-        p = issues.create(project_id=project.id,
-                          creator_id=current_user.id,
-                          **form.data)
-        flash('New course was successfully created!', 'info')
+        i = project.create_issue(creator_id=current_user.id,
+                                 **form.data)
+        flash('New issue was successfully created!', 'info')
         return redirect(url_for('.index', **context))
     context['form'] = form
-    context['project'] = g.project
+    context['project'] = project
     return render_template('issues/new.html', **context)
