@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from flask_wtf import Form, TextField, Required, Optional
+from flask_wtf import Form
+from wtforms import TextField
+from wtforms.validators import DataRequired as Required
+from wtforms.validators import Optional
 
 __all__ = ['NewIssueForm', 'UpdateIssueForm']
 
