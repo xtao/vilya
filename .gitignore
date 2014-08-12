@@ -15,6 +15,7 @@ build/
 docs/_build
 *.backup*
 venv
+local_settings.py
 
 # Project Files
 Gemfile*
