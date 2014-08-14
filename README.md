@@ -18,6 +18,8 @@ Originally inspring and adapting from douban's internal project CODE
 
    $ alembic upgrade head
 
+   $ python manager.py create_user
+
    $ python wsgi.py
 ```
 

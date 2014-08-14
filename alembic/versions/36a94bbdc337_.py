@@ -23,6 +23,7 @@ def upgrade():
     sa.Column('upstream_id', sa.Integer(), nullable=True),
     sa.Column('family_id', sa.Integer(), nullable=True),
     sa.Column('owner_id', sa.Integer(), nullable=True),
+    sa.Column('issue_counter', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
