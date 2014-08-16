@@ -50,3 +50,21 @@ class HTTPMethodOverrideMiddleware(object):
             environ['CONTENT_LENGTH'] = '0'
 
         return self.app(environ, start_response)
+
+
+class GitDispatcher(object):
+
+    def __init__(self, git_app, web_app):
+        self.instances = {
+            'git_app': git_app,
+            'web_app': web_app,
+        }
+
+    def get_application(self, user_agent):
+        if user_agent and 'git' not in user_agent:
+            return self.instances['web_app']
+        return self.instances['git_app']
+
+    def __call__(self, environ, start_response):
+        app = self.get_application(environ['HTTP_USER_AGENT'])
+        return app(environ, start_response)

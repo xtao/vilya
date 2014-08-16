@@ -39,3 +39,4 @@ six==1.7.3
 sphinxcontrib-httpdomain==1.3.0
 webassets==0.10.1
 wsgiref==0.1.2
+-e git+https://github.com/douban/sina.git@da1d53a5e892a6e00f81cf41416bc4239d87f887#egg=Sina

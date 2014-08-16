@@ -15,5 +15,6 @@ bp = Blueprint('people', __name__)
 def index(u_name):
     context = {}
     context['user'] = current_user
-    context['projects'] = projects.find(owner_id=current_user.id)
+    id = current_user.get_id()
+    context['projects'] = projects.find(owner_id=id) if id else []
     return render_template('people/index.html', **context)

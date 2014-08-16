@@ -22,5 +22,8 @@ SECURITY_RESET_WITHIN = '5 days'
 SECURITY_CONFIRM_WITHIN = '5 days'
 SECURITY_SEND_REGISTER_EMAIL = False
 
+GIT_PATH = ''
+REPO_PATH = './repos'
+
 # npm install less
 LESS_BIN = 'node_modules/less/bin/lessc'

@@ -1,4 +1,5 @@
 {% extends "layouts/base.html" %}
+{% from "projects/menu.html" import project_menu %}
 
 {% block title -%}
 {{ project.name }}
@@ -6,9 +7,7 @@
 
 {% block content %}
 <div class="col-sm-2">
-<ul class="nav nav-pills nav-stacked">
-    <li class="active"><a href="/{{project.full_name}}/issues">Issue</a></li>
-</ul>
+  {{ project_menu(project, 'Issues') }}
 </div>
 <div class="col-sm-10">
 {% block sub_content %}{% endblock %}
