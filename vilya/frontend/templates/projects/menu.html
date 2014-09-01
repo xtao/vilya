@@ -1,8 +1,9 @@
-{% macro project_menu(project, type) -%}
+{% macro render_project_menu(project, current) -%}
 <ul class="nav nav-pills nav-stacked">
   {% for item in [{'name': 'Code', 'link': '' },
+                  {'name': 'Commits', 'link': '/commits'},
                   {'name': 'Issues', 'link': '/issues'}] %}
-    <li {% if item['name'] == type %}class="active"{% endif %}><a href="/{{ project.full_name }}{{ item['link'] }}">{{ item['name'] }}</a></li>
+    <li {% if item['name'] == current %}class="active"{% endif %}><a href="/{{ project.full_name }}{{ item['link'] }}">{{ item['name'] }}</a></li>
   {% endfor %}
 </ul>
 {%- endmacro %}

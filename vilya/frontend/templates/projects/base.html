@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% from "projects/menu.html" import project_menu %}
+{% from "projects/menu.html" import render_project_menu %}
 
 {% block title -%}
 {{ project.name }}
@@ -7,7 +7,7 @@
 
 {% block content %}
 <div class="col-sm-2">
-  {{ project_menu(project, 'Issues') }}
+  {{ render_project_menu(project, project_menu) }}
 </div>
 <div class="col-sm-10">
 {% block sub_content %}{% endblock %}

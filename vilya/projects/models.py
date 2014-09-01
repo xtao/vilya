@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from ..core import db
+from .repository import ProjectRepository
 
 
 class Project(db.Model):
@@ -42,3 +43,11 @@ class Project(db.Model):
         db.session.add(self)
         db.session.commit()
         return self.issue_counter
+
+    @property
+    def repository(self):
+        return ProjectRepository(self)
+
+    @property
+    def path(self):
+        return '%s.git' % self.id
