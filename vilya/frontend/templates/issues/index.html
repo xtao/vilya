@@ -4,9 +4,9 @@
 <div class="row">
     {% for i in issues %}
     <div class="list-group">
-        <a href="#" class="list-group-item active">
+        <a href="{{ "/" + project.full_name + "/issues/" + i.number|string }}" class="list-group-item active">
             <h4 class="list-group-item-heading">
-                #{{ i.id }} {{ i.name }}
+                #{{ i.number }} {{ i.name }}
             </h4>
             <p class="list-group-item-text">...</p>
         </a>
