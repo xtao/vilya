@@ -20,3 +20,7 @@ class PullRequest(db.Model):
     merged_at = db.Column(db.DateTime())
     created_at = db.Column(db.DateTime())
     updated_at = db.Column(db.DateTime())
+
+
+    def is_local(self):
+        return self.origin_project_id == self.upstream_project_id

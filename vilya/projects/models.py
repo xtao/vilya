@@ -37,6 +37,25 @@ class Project(db.Model):
         issues.update(issue, project_id=self.id, number=number)
         return issue
 
+    def create_pullrequest(self, **kwargs):
+        from ..services import pullrequests
+        pr_kwargs = {}
+        issue_kwargs = {}
+
+        # new pr
+        pr = pullrequests.create(**pr_kwargs)
+
+        # new issue
+        issue = self.create_issue(**issue_kwargs)
+
+        # update pr
+        pullrequests.update(pr, issue_id=issue.id)
+
+        return pr
+
+    def after_create_pullrequest(self):
+        pass
+
     @property
     def next_issue_counter(self):
         self.issue_counter = Project.issue_counter + 1
@@ -51,3 +70,7 @@ class Project(db.Model):
     @property
     def path(self):
         return '%s.git' % self.id
+
+    @property
+    def remote_name(self):
+        return str(self.id)

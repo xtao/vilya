@@ -2,6 +2,9 @@
 
 from ellen.repository import Repository as _Repository
 
+PULL_REF_H = 'refs/pulls/%s/head'
+PULL_REF_M = 'refs/pulls/%s/merge'
+
 
 class Repository(object):
 
@@ -36,3 +39,9 @@ class Repository(object):
 
     def diff(self, reference, from_reference=None):
         return self.repository.diff(reference, from_reference=from_reference)
+
+    def list_remotes(self):
+        return self.repository.list_remotes()
+
+    def create_remote(self, name, url):
+        return self.repository.create_remote(name, url)
