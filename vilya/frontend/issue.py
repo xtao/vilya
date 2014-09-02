@@ -63,3 +63,14 @@ def create():
     context['form'] = form
     context['project'] = project
     return render_template('issues/new.html', **context)
+
+
+@route(bp, '/<id>')
+def issue_index(id):
+    context = {}
+    context['u_name'] = g.u_name
+    context['p_name'] = g.p_name
+    context['project'] = g.project
+    context['issue'] = issues.first(project_id=g.project.id,
+                                    number=id)
+    return render_template('issues/issue.html', **context)

@@ -1,0 +1,12 @@
+{% extends "projects/base.html" %}
+
+{% block sub_content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+    #{{issue.number}} {{issue.name}}
+    </div>
+    <div class="panel-body">
+    <p> {{issue.description}} </p>
+    </div>
+</div>
+{% endblock %}
