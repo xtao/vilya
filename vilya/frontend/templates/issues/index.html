@@ -1,16 +1,18 @@
 {% extends "projects/base.html" %}
 
 {% block sub_content %}
-<div class="row">
+<div class="panel panel-default">
+  <ul class="list-group">
     {% for i in issues %}
-    <div class="list-group">
-        <a href="{{ "/" + project.full_name + "/issues/" + i.number|string }}" class="list-group-item active">
+    <li class="list-group-item">
+        <a href="{{ "/" + project.full_name + "/issues/" + i.number|string }}" class="list-group-item">
             <h4 class="list-group-item-heading">
                 #{{ i.number }} {{ i.name }}
             </h4>
-            <p class="list-group-item-text">...</p>
+            <p class="list-group-item-text">{{ i.description|truncate(50) }}</p>
         </a>
-    </div>
+    </li>
     {% endfor %}
+  </ul>
 </div>
 {% endblock %}
