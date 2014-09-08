@@ -18,6 +18,11 @@ class Project(db.Model):
     updated_at = db.Column(db.DateTime)
 
     @property
+    def owner(self):
+        from ..services import users
+        return users.get(id=self.owner_id)
+
+    @property
     def full_name(self):
         from ..services import users
         u = users.get(id=self.owner_id)

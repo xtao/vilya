@@ -45,3 +45,29 @@ class Repository(object):
 
     def create_remote(self, name, url):
         return self.repository.create_remote(name, url)
+
+    def clone(self, path):
+        _Repository.clone(self.path, path=path)
+        return Repository(path)
+
+    @classmethod
+    def init(cls, path, work_path=None, bare=True):
+        return _Repository.init(path, work_path=work_path, bare=bare)
+
+    def merge(self):
+        pass
+
+
+def make_git_env(user=None, is_anonymous=False):
+    env = {}
+    if is_anonymous:
+        env['GIT_AUTHOR_NAME'] = 'anonymous'
+        env['GIT_AUTHOR_EMAIL'] = 'anonymous@douban.com'
+        env['GIT_COMMITTER_NAME'] = 'anonymous'
+        env['GIT_COMMITTER_EMAIL'] = 'anonymous@douban.com'
+    else:
+        env['GIT_AUTHOR_NAME'] = user.name
+        env['GIT_AUTHOR_EMAIL'] = user.email
+        env['GIT_COMMITTER_NAME'] = user.name
+        env['GIT_COMMITTER_EMAIL'] = user.email
+    return env

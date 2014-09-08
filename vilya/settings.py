@@ -24,6 +24,7 @@ SECURITY_SEND_REGISTER_EMAIL = False
 
 GIT_PATH = ''
 REPO_PATH = './repos'
+TEMP_PATH = './temp'
 
 # npm install less
 LESS_BIN = 'node_modules/less/bin/lessc'
