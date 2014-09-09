@@ -15,6 +15,11 @@ class ProjectRepository(Repository):
         self.project = project
         super(ProjectRepository, self).__init__(path)
 
+    @classmethod
+    def init(self, path, bare=True):
+        path = os.path.join(REPO_ROOT_PATH, path)
+        super(ProjectRepository, self).init(path, bare=bare)
+
     def get_commit(self, reference):
         pass
 

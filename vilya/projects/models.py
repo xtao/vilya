@@ -2,6 +2,7 @@
 
 from ..core import db
 from .repository import ProjectRepository
+from sqlalchemy import event
 
 
 class Project(db.Model):
@@ -79,3 +80,14 @@ class Project(db.Model):
     @property
     def remote_name(self):
         return str(self.id)
+
+    def create_repository(self):
+        # TODO git hook
+        return ProjectRepository.init(self.path)
+
+
+def after_create(mapper, connection, self):
+    self.create_repository()
+
+
+event.listen(Project, 'after_insert', after_create)

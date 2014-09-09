@@ -12,6 +12,10 @@ class Repository(object):
         self.path = path
         self.repository = _Repository(path)
 
+    @property
+    def is_empty(self):
+        return self.repository.is_empty
+
     def get_file(self, reference, path):
         blob = self.repository.resolve_blob("%s:%s" % (reference,
                                                        path))
@@ -51,8 +55,8 @@ class Repository(object):
         return Repository(path)
 
     @classmethod
-    def init(cls, path, work_path=None, bare=True):
-        return _Repository.init(path, work_path=work_path, bare=bare)
+    def init(cls, path, bare=True):
+        return _Repository.init(path, bare=bare)
 
     def merge(self, *k, **kw):
         return self.repository.merge(*k, **kw)
