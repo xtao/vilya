@@ -58,8 +58,8 @@ class Project(db.Model):
 
         return pr
 
-    def after_create_pullrequest(self):
-        pass
+    def after_create_pullrequest(self, pr):
+        pr.repo.sync()
 
     @property
     def next_issue_counter(self):

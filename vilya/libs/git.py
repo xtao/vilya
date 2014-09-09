@@ -54,8 +54,11 @@ class Repository(object):
     def init(cls, path, work_path=None, bare=True):
         return _Repository.init(path, work_path=work_path, bare=bare)
 
-    def merge(self):
-        pass
+    def merge(self, *k, **kw):
+        return self.repository.merge(*k, **kw)
+
+    def fetch(self, name=None):
+        return self.repository.fetch(name)
 
 
 def make_git_env(user=None, is_anonymous=False):
