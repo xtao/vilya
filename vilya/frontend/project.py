@@ -57,6 +57,14 @@ def index_301(u_name, p_name):
                             p_name=p_name))
 
 
+@route(bp, '/<u_name>/<p_name>/fork')
+def fork(u_name, p_name):
+    # checkout user project
+    # create project
+    # fork project
+    return
+
+
 @route(bp, '/<u_name>/<p_name>/tree/<reference>/<path:path>')
 def tree_index(u_name, p_name, reference, path):
     context = {}
