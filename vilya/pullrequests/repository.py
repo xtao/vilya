@@ -176,6 +176,8 @@ class Repository(object):
 
     @property
     def temp_path(self):
+        import shutil
+        import tempfile
         if self._temp_path:
             return self._temp_path
 

@@ -50,9 +50,9 @@ class Repository(object):
     def create_remote(self, name, url):
         return self.repository.create_remote(name, url)
 
-    def clone(self, path):
-        _Repository.clone(self.path, path=path)
-        return Repository(path)
+    @classmethod
+    def clone(cls, *k, **kw):
+        return _Repository.clone(*k, **kw)
 
     @classmethod
     def init(cls, path, bare=True):

@@ -85,9 +85,20 @@ class Project(db.Model):
         # TODO git hook
         return ProjectRepository.init(self.path)
 
+    def fork_repository(self, project):
+        return project.repository.fork(self.path)
+
+    @property
+    def upstream(self):
+        from ..services import projects
+        return projects.get(id=self.upstream_id)
+
 
 def after_create(mapper, connection, self):
-    self.create_repository()
+    if self.upstream_id:
+        self.fork_repository(self.upstream)
+    else:
+        self.create_repository()
 
 
 event.listen(Project, 'after_insert', after_create)

@@ -18,3 +18,6 @@ class ProjectsService(Service):
         if not project:
             return None
         return project
+
+    def fork(self, **kw):
+        return self.create(**kw)

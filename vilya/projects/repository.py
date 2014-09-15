@@ -37,3 +37,7 @@ class ProjectRepository(Repository):
         content = self.get_file(reference=reference, path=path)
         if content:
             return format_md_or_rst(path, content)
+
+    def fork(self, path):
+        path = os.path.join(REPO_ROOT_PATH, path)
+        return self.repository.clone_to(path, bare=True)

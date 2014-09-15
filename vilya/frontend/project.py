@@ -59,10 +59,34 @@ def index_301(u_name, p_name):
 
 @route(bp, '/<u_name>/<p_name>/fork')
 def fork(u_name, p_name):
+    context = {}
+    user = current_user
+    p_user = users.first(name=u_name)
+    project = projects.first(name=p_name, owner_id=p_user.id)
     # checkout user project
+    fork_project = projects.first(family_id=project.id, owner_id=user.id)
+    if fork_project:
+        return redirect(url_for('.index',
+                                u_name=user.name,
+                                p_name=fork_project.name))
     # create project
+    data = {}
+    data['name'] = project.name
+    data['description'] = project.description
+    data['upstream_id'] = project.id
+    if project.family_id:
+        family_id = project.family_id
+    elif project.upstream_id:
+        family_id = project.upstream_id
+    else:
+        family_id = project.id
+    data['family_id'] = family_id
+    data['owner_id'] = user.id
     # fork project
-    return
+    fork_project = projects.fork(**data)
+    return redirect(url_for('.index',
+                            u_name=user.name,
+                            p_name=fork_project.name))
 
 
 @route(bp, '/<u_name>/<p_name>/tree/<reference>/<path:path>')
