@@ -2,3 +2,4 @@
 
 from .projects.forms import *
 from .issues.forms import *
+from .pullrequests.forms import *

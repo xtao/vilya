@@ -24,3 +24,20 @@ class PullRequest(db.Model):
 
     def is_local(self):
         return self.origin_project_id == self.upstream_project_id
+
+    @property
+    def issue(self):
+        from ..services import issues
+        return issues.get(id=self.issue_id)
+
+    @property
+    def name(self):
+        return self.issue.name
+
+    @property
+    def description(self):
+        return self.issue.description
+
+    @property
+    def number(self):
+        return self.issue.number

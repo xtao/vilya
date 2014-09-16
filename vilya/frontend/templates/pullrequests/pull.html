@@ -1,0 +1,28 @@
+{% extends "projects/base.html" %}
+
+{% block sub_content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+    #{{pullrequest.number}} {{pullrequest.name}}
+    </div>
+    <div class="panel-body">
+    <p> {{pullrequest.description}} </p>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+    Commits
+    </div>
+    <div class="panel-body">
+    <p> {{pullrequest.description}} </p>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+    Files
+    </div>
+    <div class="panel-body">
+    <p> {{pullrequest.description}} </p>
+    </div>
+</div>
+{% endblock %}

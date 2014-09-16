@@ -8,11 +8,11 @@ from flask import (Blueprint,
                    url_for,
                    abort)
 from flask.ext.login import current_user
-from ..services import projects, users, issues
-from ..forms import NewIssueForm
+from ..services import projects, users, pullrequests, issues
+from ..forms import NewPullRequestForm
 from . import route
 
-bp = Blueprint('issue', __name__, url_prefix='/<u_name>/<p_name>/issues')
+bp = Blueprint('pullrequest', __name__, url_prefix='/<u_name>/<p_name>/pulls')
 
 
 @bp.url_value_preprocessor
@@ -36,19 +36,19 @@ def index():
     context['u_name'] = g.u_name
     context['p_name'] = g.p_name
     context['project'] = g.project
-    context['project_menu'] = 'Issues'
+    context['project_menu'] = 'Pulls'
     project = g.project
-    context['issues'] = issues.find(project_id=project.id)
-    return render_template('issues/index.html', **context)
+    context['pullrequests'] = pullrequests.find(upstream_project_id=project.id)
+    return render_template('pullrequests/index.html', **context)
 
 
 @route(bp, '/new')
 def new():
     context = {}
-    context['form'] = NewIssueForm()
+    context['form'] = NewPullRequestForm()
     context['project'] = g.project
-    context['project_menu'] = 'Issues'
-    return render_template('issues/new.html', **context)
+    context['project_menu'] = 'Pulls'
+    return render_template('pullrequests/new.html', **context)
 
 
 @route(bp, '/create', methods=['post'])
@@ -56,26 +56,27 @@ def create():
     context = {}
     context['u_name'] = g.u_name
     context['p_name'] = g.p_name
-    context['project_menu'] = 'Issues'
+    context['project_menu'] = 'Pulls'
     project = g.project
-    form = NewIssueForm()
+    form = NewPullRequestForm()
     if form.validate_on_submit():
-        i = project.create_issue(creator_id=current_user.id,
-                                 **form.data)
-        flash('New issue was successfully created!', 'info')
+        p = project.create_pullrequest(creator_id=current_user.id,
+                                       **form.data)
+        flash('New pullrequest was successfully created!', 'info')
         return redirect(url_for('.index', **context))
     context['form'] = form
     context['project'] = project
-    return render_template('issues/new.html', **context)
+    return render_template('pullrequests/new.html', **context)
 
 
 @route(bp, '/<id>')
-def issue_index(id):
+def pullrequest_index(id):
     context = {}
     context['u_name'] = g.u_name
     context['p_name'] = g.p_name
     context['project'] = g.project
-    context['project_menu'] = 'Issues'
-    context['issue'] = issues.first(project_id=g.project.id,
-                                    number=id)
-    return render_template('issues/issue.html', **context)
+    context['project_menu'] = 'Pulls'
+    issue = issues.first(project_id=g.project.id, number=id)
+    context['pullrequest'] = pullrequests.first(upstream_project_id=g.project.id,
+                                                issue_id=issue.id)
+    return render_template('pullrequests/pull.html', **context)

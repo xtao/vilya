@@ -8,9 +8,13 @@ class ProjectsService(Service):
     __model__ = Project
 
     def get_by_name_path(self, name_path):
+        return self.get_by_repo_name(name_path)
+
+    def get_by_repo_name(self, name):
         from ..services import users
-        name_path = name_path[:-4]
-        user_name, _, project_name = name_path.partition("/")
+        if name.endswith('.git'):
+            name = name[:-4]
+        user_name, _, project_name = name.partition("/")
         user = users.first(name=user_name)
         if not user:
             return None
