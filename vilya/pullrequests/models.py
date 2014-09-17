@@ -56,3 +56,6 @@ class PullRequest(db.Model):
     @property
     def repository(self):
         return Repository(self)
+
+    def after_create(self):
+        self.repository.sync()

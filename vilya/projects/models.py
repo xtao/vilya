@@ -44,67 +44,10 @@ class Project(db.Model):
         return issue
 
     def create_pullrequest(self, **kwargs):
-        from ..services import pullrequests, projects
-
-        origin = kwargs.get('origin')
-        if not origin:
-            origin_project_id = self.id
-            origin_project_ref = 'master'
-        else:
-            repo_name, _, reference = origin.rpartition(':')
-            if repo_name:
-                origin_project = projects.get_by_repo_name(repo_name)
-            else:
-                origin_project = self
-            origin_project_ref = reference
-            origin_project_id = origin_project.id
-        c = origin_project.repository.resolve_commit(origin_project_ref)
-        origin_commit_sha = c.hex
-
-        upstream = kwargs.get('upstream')
-        if not upstream:
-            upstream_project_id = self.id
-            upstream_project_ref = 'master'
-        else:
-            repo_name, _, reference = upstream.rpartition(':')
-            if repo_name:
-                upstream_project = projects.get_by_repo_name(repo_name)
-            else:
-                upstream_project = self
-            upstream_project_ref = reference
-            upstream_project_id = upstream_project.id
-        c = upstream_project.repository.resolve_commit(upstream_project_ref)
-        upstream_commit_sha = c.hex
-
-        pr_kwargs = dict(
-                creator_id=kwargs.get('creator_id'),
-                origin_project_id=origin_project_id,
-                origin_project_ref=origin_project_ref,
-                origin_commit_sha=origin_commit_sha,
-                upstream_project_id=upstream_project_id,
-                upstream_project_ref=upstream_project_ref,
-                upstream_commit_sha=upstream_commit_sha,
-                )
-
-        issue_kwargs = dict(
-                name=kwargs.get('name'),
-                description=kwargs.get('description'),
-                creator_id=kwargs.get('creator_id'),
-                )
-
-        # new pr
-        pr = pullrequests.create(**pr_kwargs)
-
-        # new issue
-        issue = self.create_issue(**issue_kwargs)
-
-        # update pr
-        pullrequests.update(pr, issue_id=issue.id)
-
-        return pr
-
-    def after_create_pullrequest(self, pr):
-        pr.repo.sync()
+        from ..services import pullrequests
+        pull = pullrequests.create_pullrequest(project=self, **kwargs)
+        pull.after_create()
+        return pull
 
     @property
     def next_issue_counter(self):

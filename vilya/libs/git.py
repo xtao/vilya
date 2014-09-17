@@ -68,6 +68,8 @@ class Repository(object):
     def resolve_merge_base(self, reference, from_reference):
         return self.repository.merge_base(reference, from_reference)
 
+    def update_reference(self, *k):
+        return self.repository.update_reference(*k)
 
 def make_git_env(user=None, is_anonymous=False):
     env = {}
