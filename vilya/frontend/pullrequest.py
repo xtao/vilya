@@ -77,6 +77,9 @@ def pullrequest_index(id):
     context['project'] = g.project
     context['project_menu'] = 'Pulls'
     issue = issues.first(project_id=g.project.id, number=id)
-    context['pullrequest'] = pullrequests.first(upstream_project_id=g.project.id,
-                                                issue_id=issue.id)
+    p = pullrequests.first(upstream_project_id=g.project.id,
+                           issue_id=issue.id)
+    context['pullrequest'] = p
+    context['commits'] = p.repository.commits
+    context['diff'] = p.repository.diff
     return render_template('pullrequests/pull.html', **context)

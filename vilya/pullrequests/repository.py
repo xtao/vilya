@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import shutil
 from ..libs.git import PULL_REF_H, PULL_REF_M, make_git_env
 from ..settings import TEMP_PATH
 
@@ -103,7 +104,7 @@ class Repository(object):
 
     @property
     def can_fastforward(self):
-        commits = self.repository.list_commits(self.upsteam_commit_hex,
+        commits = self.repository.list_commits(self.upstream_commit_hex,
                                                self.origin_commit_hex)
         if not commits:
             return True
@@ -175,8 +176,18 @@ class Repository(object):
         return hex
 
     @property
+    def merge_base_hex(self):
+        upstream = self.upstream_commit_hex
+        origin = self.origin_commit_hex
+        commit = None
+        if upstream and origin:
+            commit = self.repository.resolve_merge_base(upstream, origin)
+        if not commit:
+            return upstream
+        return commit.hex
+
+    @property
     def temp_path(self):
-        import shutil
         import tempfile
         if self._temp_path:
             return self._temp_path
@@ -187,3 +198,17 @@ class Repository(object):
         worktree = tempfile.mkdtemp(dir=temp_pull_path)
         self._temp_path = worktree
         return worktree
+
+    @property
+    def commits(self):
+        return self.repository.list_commits(self.origin_commit_hex,
+                                            self.upstream_commit_hex)
+
+    @property
+    def files(self):
+        return []
+
+    @property
+    def diff(self):
+        return self.repository.diff(self.origin_commit_hex,
+                                    self.merge_base_hex)

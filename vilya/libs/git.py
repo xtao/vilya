@@ -33,8 +33,9 @@ class Repository(object):
     def list_tags(self):
         return self.repository.list_tags()
 
-    def list_commits(self, reference='HEAD', path=None, max_count=25):
+    def list_commits(self, reference='HEAD', from_reference=None, path=None, max_count=25):
         return self.repository.list_commits(reference,
+                                            from_ref=from_reference,
                                             path=path,
                                             max_count=max_count)
 
@@ -63,6 +64,9 @@ class Repository(object):
 
     def fetch(self, name=None):
         return self.repository.fetch(name)
+
+    def resolve_merge_base(self, reference, from_reference):
+        return self.repository.merge_base(reference, from_reference)
 
 
 def make_git_env(user=None, is_anonymous=False):

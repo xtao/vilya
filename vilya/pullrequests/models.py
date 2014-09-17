@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from ..core import db
+from .repository import Repository
 
 
 class PullRequest(db.Model):
@@ -41,3 +42,17 @@ class PullRequest(db.Model):
     @property
     def number(self):
         return self.issue.number
+
+    @property
+    def origin_project(self):
+        from ..services import projects
+        return projects.get(self.origin_project_id)
+
+    @property
+    def upstream_project(self):
+        from ..services import projects
+        return projects.get(self.upstream_project_id)
+
+    @property
+    def repository(self):
+        return Repository(self)

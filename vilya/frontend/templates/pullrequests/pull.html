@@ -14,15 +14,33 @@
     Commits
     </div>
     <div class="panel-body">
-    <p> {{pullrequest.description}} </p>
+    <p> {{commits|length}} commits</p>
     </div>
+    <ul class="list-group">
+        {% for commit in commits %}
+        <li class="list-group-item">
+        <a href={{ "/" + project.full_name + '/commit/' + commit.hex }}>{{ commit.hex }}</a>
+        {{ commit.message | truncate(35) }}
+        </li>
+        {% endfor %}
+    </ul>
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">
     Files
     </div>
     <div class="panel-body">
-    <p> {{pullrequest.description}} </p>
+    <p> {{diff|length}} files </p>
     </div>
+    {% for p in diff %}
+    <table>
+        <tr><th></th><th></th><th>{{p.new_file_path}}</th></tr>
+        {% for h in p.hunks %}
+        {% for t, l in h.lines %}
+        <tr><td>1</td><td>1</td><td><pre>{{ l }}</pre></td></tr>
+        {% endfor %}
+        {% endfor %}
+    </table>
+    {% endfor %}
 </div>
 {% endblock %}
