@@ -15,6 +15,11 @@ class ProjectRepository(Repository):
         self.project = project
         super(ProjectRepository, self).__init__(path)
 
+    @classmethod
+    def init(self, path, bare=True):
+        path = os.path.join(REPO_ROOT_PATH, path)
+        super(ProjectRepository, self).init(path, bare=bare)
+
     def get_commit(self, reference):
         pass
 
@@ -32,3 +37,7 @@ class ProjectRepository(Repository):
         content = self.get_file(reference=reference, path=path)
         if content:
             return format_md_or_rst(path, content)
+
+    def fork(self, path):
+        path = os.path.join(REPO_ROOT_PATH, path)
+        return self.repository.clone_to(path, bare=True)

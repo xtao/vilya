@@ -2,6 +2,7 @@
 
 from ..core import db
 from .repository import ProjectRepository
+from sqlalchemy import event
 
 
 class Project(db.Model):
@@ -16,6 +17,11 @@ class Project(db.Model):
     issue_counter = db.Column(db.Integer, default=0)
     created_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)
+
+    @property
+    def owner(self):
+        from ..services import users
+        return users.get(id=self.owner_id)
 
     @property
     def full_name(self):
@@ -37,6 +43,12 @@ class Project(db.Model):
         issues.update(issue, project_id=self.id, number=number)
         return issue
 
+    def create_pullrequest(self, **kwargs):
+        from ..services import pullrequests
+        pull = pullrequests.create_pullrequest(project=self, **kwargs)
+        pull.after_create()
+        return pull
+
     @property
     def next_issue_counter(self):
         self.issue_counter = Project.issue_counter + 1
@@ -51,3 +63,29 @@ class Project(db.Model):
     @property
     def path(self):
         return '%s.git' % self.id
+
+    @property
+    def remote_name(self):
+        return str(self.id)
+
+    def create_repository(self):
+        # TODO git hook
+        return ProjectRepository.init(self.path)
+
+    def fork_repository(self, project):
+        return project.repository.fork(self.path)
+
+    @property
+    def upstream(self):
+        from ..services import projects
+        return projects.get(id=self.upstream_id)
+
+
+def after_create(mapper, connection, self):
+    if self.upstream_id:
+        self.fork_repository(self.upstream)
+    else:
+        self.create_repository()
+
+
+event.listen(Project, 'after_insert', after_create)

@@ -6,6 +6,13 @@
 {%- endblock %}
 
 {% block content %}
+<div class="page-header">
+    <a href="">{{project.owner.name}}</a>/<a href="">{{project.name}}</a>
+    <div class="btn-group btn-group-sm">
+        <button type="button" class="btn btn-default">Watch</button>
+        <button type="button" class="btn btn-default">Fork</button>
+    </div>
+</div>
 <div class="col-sm-2">
   {{ render_project_menu(project, project_menu) }}
 </div>

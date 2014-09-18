@@ -42,6 +42,10 @@ def index(u_name, p_name):
     context['reference'] = 'HEAD'
     context['path'] = None
 
+    if project.repository.is_empty:
+        context['project_menu'] = 'Code'
+        return render_template('projects/empty.html', **context)
+
     generate_tree_context(context)
     return render_template('projects/tree.html', **context)
 
@@ -53,6 +57,38 @@ def index_301(u_name, p_name):
                             p_name=p_name))
 
 
+@route(bp, '/<u_name>/<p_name>/fork')
+def fork(u_name, p_name):
+    context = {}
+    user = current_user
+    p_user = users.first(name=u_name)
+    project = projects.first(name=p_name, owner_id=p_user.id)
+    # checkout user project
+    fork_project = projects.first(family_id=project.id, owner_id=user.id)
+    if fork_project:
+        return redirect(url_for('.index',
+                                u_name=user.name,
+                                p_name=fork_project.name))
+    # create project
+    data = {}
+    data['name'] = project.name
+    data['description'] = project.description
+    data['upstream_id'] = project.id
+    if project.family_id:
+        family_id = project.family_id
+    elif project.upstream_id:
+        family_id = project.upstream_id
+    else:
+        family_id = project.id
+    data['family_id'] = family_id
+    data['owner_id'] = user.id
+    # fork project
+    fork_project = projects.fork(**data)
+    return redirect(url_for('.index',
+                            u_name=user.name,
+                            p_name=fork_project.name))
+
+
 @route(bp, '/<u_name>/<p_name>/tree/<reference>/<path:path>')
 def tree_index(u_name, p_name, reference, path):
     context = {}
@@ -62,8 +98,12 @@ def tree_index(u_name, p_name, reference, path):
     context['reference'] = reference
     context['path'] = path
 
+    if project.repository.is_empty:
+        context['project_menu'] = 'Code'
+        return render_template('projects/empty.html', **context)
+
     generate_tree_context(context)
-    return render_template('projects/index.html', **context)
+    return render_template('projects/tree.html', **context)
 
 
 @route(bp, '/<u_name>/<p_name>/blob/<reference>/<path:path>')
@@ -74,6 +114,11 @@ def blob_index(u_name, p_name, reference, path):
     context['project'] = project
     context['reference'] = reference
     context['path'] = path
+
+    if project.repository.is_empty:
+        return redirect(url_for('.index',
+                                u_name=u_name,
+                                p_name=p_name))
 
     generate_blob_context(context)
     return render_template('projects/blob.html', **context)
@@ -90,6 +135,11 @@ def commits_index(u_name, p_name, reference, path):
     context['reference'] = reference
     context['path'] = path
 
+    if project.repository.is_empty:
+        return redirect(url_for('.index',
+                                u_name=u_name,
+                                p_name=p_name))
+
     generate_commits_context(context)
     return render_template('projects/commits.html', **context)
 
@@ -101,6 +151,11 @@ def commit_index(u_name, p_name, reference):
     context['project'] = project
     context['reference'] = reference
 
+    if project.repository.is_empty:
+        return redirect(url_for('.index',
+                                u_name=u_name,
+                                p_name=p_name))
+
     generate_commit_context(context)
     return render_template('projects/commit.html', **context)
 
@@ -109,14 +164,15 @@ def generate_tree_context(context):
     project = context['project']
     reference = context['reference']
     path = context['path']
+    repo = project.repository
 
     context['project_menu'] = 'Code'
-    context['references'] = {'branches': project.repository.list_branches(),
-                             'tags': project.repository.list_tags()}
-    context['readme'] = project.repository.get_readme(reference=reference,
-                                                      path=path)
-    context['entries'] = project.repository.list_entries(reference=reference,
-                                                         path=path)
+    context['references'] = {'branches': repo.list_branches(),
+                             'tags': repo.list_tags()}
+    context['readme'] = repo.get_readme(reference=reference,
+                                        path=path)
+    context['entries'] = repo.list_entries(reference=reference,
+                                           path=path)
     return context
 
 
