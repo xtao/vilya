@@ -1,4 +1,6 @@
 {% extends "projects/base.html" %}
+{% from "macros/diffs/patch.html" import render_patch_file %}
+{% from "macros/commits/commit.html" import render_commit_item %}
 
 {% block sub_content %}
 <div class="panel panel-default">
@@ -16,12 +18,9 @@
     <div class="panel-body">
     <p> {{commits|length}} commits</p>
     </div>
-    <ul class="list-group">
+    <ul class="list-group table-list">
         {% for commit in commits %}
-        <li class="list-group-item">
-        <a href={{ "/" + project.full_name + '/commit/' + commit.hex }}>{{ commit.hex }}</a>
-        {{ commit.message | truncate(35) }}
-        </li>
+        {{render_commit_item(project, commit)}}
         {% endfor %}
     </ul>
 </div>
@@ -33,14 +32,7 @@
     <p> {{diff|length}} files </p>
     </div>
     {% for p in diff %}
-    <table>
-        <tr><th></th><th></th><th>{{p.new_file_path}}</th></tr>
-        {% for h in p.hunks %}
-        {% for t, l in h.lines %}
-        <tr><td>1</td><td>1</td><td><pre>{{ l }}</pre></td></tr>
-        {% endfor %}
-        {% endfor %}
-    </table>
+    {{ render_patch_file(p) }}
     {% endfor %}
 </div>
 {% endblock %}

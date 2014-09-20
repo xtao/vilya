@@ -4,16 +4,16 @@ from flask_assets import Environment, Bundle
 
 
 #: application css bundle
-css_overholt = Bundle("less/overholt.less",
-                      filters="less",
-                      output="css/overholt.css",
-                      debug=False)
+css_vilya = Bundle("sass/vilya.sass",
+                   filters="compass",
+                   output="css/vilya.css",
+                   debug=False)
 
 #: consolidated css bundle
 css_all = Bundle("css/bootstrap.min.css",
-                 css_overholt,
+                 css_vilya,
                  filters="cssmin",
-                 output="css/overholt.min.css")
+                 output="css/vilya.min.css")
 
 #: vendor js bundle
 js_vendor = Bundle("js/vendor/jquery-1.10.1.min.js",
@@ -31,6 +31,7 @@ js_main = Bundle("coffee/*.coffee",
 
 def init_app(app):
     webassets = Environment(app)
+    webassets.url = app.static_url_path
     webassets.register('css_all', css_all)
     webassets.register('js_vendor', js_vendor)
     webassets.register('js_main', js_main)

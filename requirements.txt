@@ -43,4 +43,4 @@ wsgiref==0.1.2
 -e git+https://github.com/douban/ellen.git@069d87b9a754c384b4b4e9302ad49daaaa8cbab9#egg=Ellen
 -e git+https://github.com/douban/pygit2.git@952060fcec78db643cd0dcd3eb4df4044d8c020a#egg=Pygit2
 -e git+https://github.com/qingfeng/misaka.git@2fbe52692e8f304eea9d8925fd2a857916ff0ea5#egg=Misaka
--e git+https://github.com/xtao/mikoto.git@2a4e7844f33c6881e5e9cb8068b350dda29c2130#egg=Mikoto
+-e git+https://github.com/xtao/mikoto.git@6034faf5ef45aea6442eb4fcbc456c457997d0ff#egg=Mikoto

@@ -6,8 +6,10 @@
 
 {% block sub_content %}
 <div class="panel panel-default">
-<div class="">
-{{ file | safe }}
+<div class="file">
+    <div class="data highlight blob-wrapper">
+        {{ file | safe }}
+    </div>
 </div>
 </div>
 {% endblock %}

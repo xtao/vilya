@@ -1,0 +1,24 @@
+{% from "macros/diffs/blob.html" import blob_num_class, blob_code_class %}
+
+{% macro render_patch_file(p) -%}
+<div class="file">
+    <div class="meta">
+        <span>{{p.new_file_path}}</span>
+    </div>
+    <div class="data blob-wrapper">
+        <table>
+            <tr><th></th><th></th><th></th></tr>
+            {% for h in p.hunks %}
+            {% for t, l in h.lines %}
+            <tr>
+                <td class="blob-num {{blob_num_class(t)}}">1</td>
+                <td class="blob-num {{blob_num_class(t)}}">1</td>
+                <td class="blob-code blob-code-context {{blob_code_class(t)}}">{{ l }}</td>
+            </tr>
+            {% endfor %}
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{%- endmacro %}
+

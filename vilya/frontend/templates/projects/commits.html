@@ -1,4 +1,5 @@
 {% extends "projects/base.html" %}
+{% from "macros/commits/commit.html" import render_commit_item %}
 
 {% block title -%}
 {{ project.name }}
@@ -8,12 +9,9 @@
 <div class="panel panel-default">
     <div class="panel-heading">
     </div>
-    <ul class="list-group">
+    <ul class="list-group table-list">
         {% for commit in commits %}
-        <li class="list-group-item">
-        <a href={{ "/" + project.full_name + '/commit/' + commit.hex }}>{{ commit.hex }}</a>
-        {{ commit.message | truncate(35) }}
-        </li>
+        {{render_commit_item(project, commit)}}
         {% endfor %}
     </ul>
 </div>

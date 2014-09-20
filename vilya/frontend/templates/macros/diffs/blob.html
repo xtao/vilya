@@ -1,0 +1,19 @@
+{% macro blob_num_class(type) -%}
+    {% if type == '+' -%}
+    blob-num-addition
+    {%- elif type == '-' -%}
+    blob-num-deletion
+    {%- else -%}
+    blob-num-context
+    {%- endif -%}
+{%- endmacro %}
+
+{% macro blob_code_class(type) -%}
+    {%- if type == '+' -%}
+    blob-code-addition
+    {%- elif type == '-' -%}
+    blob-code-deletion
+    {%- else -%}
+    blob-code-context
+    {%- endif -%}
+{%- endmacro %}
