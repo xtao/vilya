@@ -43,6 +43,7 @@ class PullRequestService(Service):
 
         project = kwargs.get('project')
         origin = kwargs.get('origin')
+        origin_project = project
         if not origin:
             origin_project_id = project.id
             origin_project_ref = 'master'
@@ -50,14 +51,13 @@ class PullRequestService(Service):
             repo_name, _, reference = origin.rpartition(':')
             if repo_name:
                 origin_project = projects.get_by_repo_name(repo_name)
-            else:
-                origin_project = project
             origin_project_ref = reference
             origin_project_id = origin_project.id
         c = origin_project.repository.resolve_commit(origin_project_ref)
         origin_commit_sha = c.hex
 
         upstream = kwargs.get('upstream')
+        upstream_project = project
         if not upstream:
             upstream_project_id = project.id
             upstream_project_ref = 'master'
@@ -65,8 +65,6 @@ class PullRequestService(Service):
             repo_name, _, reference = upstream.rpartition(':')
             if repo_name:
                 upstream_project = projects.get_by_repo_name(repo_name)
-            else:
-                upstream_project = project
             upstream_project_ref = reference
             upstream_project_id = upstream_project.id
         c = upstream_project.repository.resolve_commit(upstream_project_ref)

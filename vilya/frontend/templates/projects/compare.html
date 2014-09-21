@@ -1,0 +1,30 @@
+{% extends "projects/base.html" %}
+{% from "macros/diffs/patch.html" import render_patch_file %}
+{% from "macros/commits/commit.html" import render_commit_item %}
+
+{% block sub_content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+    Commits
+    </div>
+    <div class="panel-body">
+    <p> {{commits|length}} commits</p>
+    </div>
+    <ul class="list-group table-list">
+        {% for commit in commits %}
+        {{render_commit_item(project, commit)}}
+        {% endfor %}
+    </ul>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+    Files
+    </div>
+    <div class="panel-body">
+    <p> {{diff|length}} files </p>
+    </div>
+    {% for p in diff %}
+    {{ render_patch_file(p) }}
+    {% endfor %}
+</div>
+{% endblock %}

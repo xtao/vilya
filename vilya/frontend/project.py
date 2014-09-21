@@ -143,6 +143,7 @@ def commits_index(u_name, p_name, reference, path):
     generate_commits_context(context)
     return render_template('projects/commits.html', **context)
 
+
 @route(bp, '/<u_name>/<p_name>/commit/<reference>')
 def commit_index(u_name, p_name, reference):
     context = {}
@@ -158,6 +159,23 @@ def commit_index(u_name, p_name, reference):
 
     generate_commit_context(context)
     return render_template('projects/commit.html', **context)
+
+
+@route(bp, '/<u_name>/<p_name>/compare/<reference>')
+def compare_index(u_name, p_name, reference):
+    context = {}
+    p_user = users.first(name=u_name)
+    project = projects.first(name=p_name, owner_id=p_user.id)
+    context['project'] = project
+    context['reference'] = reference
+
+    if project.repository.is_empty:
+        return redirect(url_for('.index',
+                                u_name=u_name,
+                                p_name=p_name))
+
+    generate_compare_context(context)
+    return render_template('projects/compare.html', **context)
 
 
 def generate_tree_context(context):
@@ -210,4 +228,22 @@ def generate_commit_context(context):
     commit = project.repository.resolve_commit(reference=reference)
     context['commit'] = commit
     context['diff'] = project.repository.diff(commit.hex)
+    return context
+
+
+def generate_compare_context(context):
+    from ..services import pullrequests
+    kwargs = {}
+    project = context['project']
+    reference = context['reference']
+    to_reference = reference
+    from_reference = None
+    if '...' in reference:
+        from_reference, _, to_reference = reference.partition('...')
+    kwargs['upstream'] = from_reference
+    kwargs['origin'] = to_reference
+    kwargs['project'] = project
+    pull = pullrequests.new_pullrequest(**kwargs)
+    context['commits'] = pull.repository.commits
+    context['diff'] = pull.repository.diff
     return context
