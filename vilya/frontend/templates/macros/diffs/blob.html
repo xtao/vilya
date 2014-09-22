@@ -3,6 +3,10 @@
     blob-num-addition
     {%- elif type == '-' -%}
     blob-num-deletion
+    {%- elif type == '<' -%}
+    blob-num-addition
+    {%- elif type == '>' -%}
+    blob-num-deletion
     {%- else -%}
     blob-num-context
     {%- endif -%}
@@ -12,6 +16,10 @@
     {%- if type == '+' -%}
     blob-code-addition
     {%- elif type == '-' -%}
+    blob-code-deletion
+    {%- elif type == '<' -%}
+    blob-code-addition
+    {%- elif type == '>' -%}
     blob-code-deletion
     {%- else -%}
     blob-code-context

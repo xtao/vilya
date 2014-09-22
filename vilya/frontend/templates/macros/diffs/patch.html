@@ -9,11 +9,19 @@
         <table>
             <tr><th></th><th></th><th></th></tr>
             {% for h in p.hunks %}
-            {% for t, l in h.lines %}
+            {% set l = h.heading %}
+            {% set t = l.attr %}
             <tr>
-                <td class="blob-num {{blob_num_class(t)}}">1</td>
-                <td class="blob-num {{blob_num_class(t)}}">1</td>
-                <td class="blob-code blob-code-context {{blob_code_class(t)}}">{{ l }}</td>
+                <td class="blob-num {{blob_num_class(t)}}">{{l.old_num}}</td>
+                <td class="blob-num {{blob_num_class(t)}}">{{l.new_num}}</td>
+                <td class="blob-code blob-code-context {{blob_code_class(t)}}">{{ l.text }}</td>
+            </tr>
+            {% for l in h.lines %}
+            {% set t = l.attr %}
+            <tr>
+                <td class="blob-num {{blob_num_class(t)}}">{{l.old_num}}</td>
+                <td class="blob-num {{blob_num_class(t)}}">{{l.new_num}}</td>
+                <td class="blob-code blob-code-context {{blob_code_class(t)}}">{{ l.text }}</td>
             </tr>
             {% endfor %}
             {% endfor %}

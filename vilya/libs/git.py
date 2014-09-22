@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from ellen.repository import Repository as _Repository
+from .diff import Diff
 
 PULL_REF_H = 'refs/pulls/%s/head'
 PULL_REF_M = 'refs/pulls/%s/merge'
@@ -43,7 +44,10 @@ class Repository(object):
         return self.repository.resolve_commit(reference)
 
     def diff(self, reference, from_reference=None):
-        return self.repository.diff(reference, from_reference=from_reference)
+        raw_diff = self.repository.diff(reference, from_reference=from_reference)
+        if raw_diff:
+            return Diff(raw_diff)
+        return raw_diff
 
     def list_remotes(self):
         return self.repository.list_remotes()
