@@ -5,14 +5,29 @@
 {{ project.name }}
 {%- endblock %}
 
-{% block content %}
+{% block header -%}
 <div class="page-header">
-    <a href="">{{project.owner.name}}</a>/<a href="">{{project.name}}</a>
-    <div class="btn-group btn-group-sm">
-        <button type="button" class="btn btn-default">Watch</button>
-        <button type="button" class="btn btn-default">Fork</button>
+    <div class="container">
+        <div class="col-sm-12">
+            <div class="btn-group btn-group-sm pull-right">
+                <button type="button" class="btn btn-default">Watch</button>
+                <button type="button" class="btn btn-default">Fork</button>
+            </div>
+            <h1>
+                <span class="glyphicon glyphicon-book"></span>
+                <span>
+                    <a href="">{{project.owner.name}}</a>
+                </span>
+                <span>/</span>
+                <span>
+                    <a href="">{{project.name}}</a>
+                </span>
+            </h1>
+        </div>
     </div>
 </div>
+{%- endblock %}
+{% block content %}
 <div class="col-sm-2">
   {{ render_project_menu(project, project_menu) }}
 </div>

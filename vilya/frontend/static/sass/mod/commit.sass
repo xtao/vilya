@@ -1,0 +1,72 @@
+.table-list
+  display: table
+  table-layout: fixed
+  width: 100%
+  color: #999
+  border-bottom: 1px solid #e5e5e5
+
+.table-list-item
+  position: relative
+  list-style: none
+  display: table-row
+
+.table-list-cell
+  position: relative
+  display: table-cell
+  padding: 8px 10px
+  font-size: 12px
+  vertical-align: top
+  border-top: 1px solid #eee
+
+.table-list-bordered
+  .table-list-cell:last-child
+    border-right: 1px solid #e5e5e5
+
+.commits-list-item
+  .commit-title
+    margin: 0
+    font-size: 15px
+    font-weight: bold
+    color: #333
+
+  .commit-meta
+    margin-top: 1px
+    font-weight: normal
+    color: #999
+
+  .commit-author
+    color: #777
+
+  .commit-desc
+    display: none
+
+  .commit-desc
+    pre
+      padding-left: 8px
+      padding: 0
+      margin-top: 5px
+      margin-bottom: 10px
+      font-size: 12px
+      color: #596063
+      border-left: 1px solid #e5e5e5
+      overflow: auto
+      background-color: #f0f5fa
+
+  .button-outline
+    margin-top: 4px
+    padding: 5px 8px
+
+.commit-links-group
+  margin-right: 5px
+
+.commit-desc
+  pre
+    max-width: 700px
+    white-space: pre-wrap
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace
+    font-size: 13px
+    color: #596063
+    margin: 10px 0
+
+.commit-avatar-cell
+  width: 47px

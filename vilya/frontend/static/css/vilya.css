@@ -393,7 +393,7 @@
   white-space: pre-wrap;
 }
 
-/* line 6, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 1, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/commit.sass */
 .table-list {
   display: table;
   table-layout: fixed;
@@ -402,14 +402,14 @@
   border-bottom: 1px solid #e5e5e5;
 }
 
-/* line 13, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 8, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/commit.sass */
 .table-list-item {
   position: relative;
   list-style: none;
   display: table-row;
 }
 
-/* line 18, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 13, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/commit.sass */
 .table-list-cell {
   position: relative;
   display: table-cell;
@@ -419,33 +419,33 @@
   border-top: 1px solid #eeeeee;
 }
 
-/* line 27, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 22, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/commit.sass */
 .table-list-bordered .table-list-cell:last-child {
   border-right: 1px solid #e5e5e5;
 }
 
-/* line 31, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 26, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/commit.sass */
 .commits-list-item .commit-title {
   margin: 0;
   font-size: 15px;
   font-weight: bold;
   color: #333333;
 }
-/* line 37, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 32, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/commit.sass */
 .commits-list-item .commit-meta {
   margin-top: 1px;
   font-weight: normal;
   color: #999999;
 }
-/* line 42, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 37, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/commit.sass */
 .commits-list-item .commit-author {
   color: #777777;
 }
-/* line 45, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 40, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/commit.sass */
 .commits-list-item .commit-desc {
   display: none;
 }
-/* line 49, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 44, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/commit.sass */
 .commits-list-item .commit-desc pre {
   padding-left: 8px;
   padding: 0;
@@ -457,18 +457,18 @@
   overflow: auto;
   background-color: #f0f5fa;
 }
-/* line 60, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 55, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/commit.sass */
 .commits-list-item .button-outline {
   margin-top: 4px;
   padding: 5px 8px;
 }
 
-/* line 64, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 59, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/commit.sass */
 .commit-links-group {
   margin-right: 5px;
 }
 
-/* line 68, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 63, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/commit.sass */
 .commit-desc pre {
   max-width: 700px;
   white-space: pre-wrap;
@@ -478,12 +478,115 @@
   margin: 10px 0;
 }
 
-/* line 76, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 71, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/commit.sass */
 .commit-avatar-cell {
   width: 47px;
 }
 
-/* line 79, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 1, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/diff.sass */
+.blob-num {
+  padding-left: 10px;
+  padding-right: 10px;
+  vertical-align: top;
+  cursor: pointer;
+  text-align: right;
+  width: 1%;
+  min-width: 50px;
+  border: solid #eeeeee;
+  border-width: 0 1px 0 0;
+}
+
+/* line 12, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/diff.sass */
+.blob-num-deletion {
+  background-color: #f7c8c8;
+  border-color: #e9aeae;
+}
+
+/* line 16, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/diff.sass */
+.blob-num-addition {
+  background-color: #ceffce;
+  border-color: #b4e2b4;
+}
+
+/* line 20, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/diff.sass */
+.blob-code {
+  white-space: pre;
+  overflow: visible;
+  position: relative;
+  padding-left: 10px;
+  padding-right: 10px;
+  vertical-align: top;
+}
+
+/* line 28, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/diff.sass */
+.blob-code-hunk {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  background-color: #f8fafd;
+  border-width: 1px 0;
+}
+
+/* line 34, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/diff.sass */
+.blob-code-deletion {
+  background-color: #ffdddd;
+}
+
+/* line 37, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/diff.sass */
+.blob-code-addition {
+  background-color: #ddffdd;
+}
+
+/* line 40, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/diff.sass */
+.blob-num-hunk {
+  background-color: #f0f5fa;
+}
+
+/* line 43, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/diff.sass */
+.blob-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+/* line 49, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/diff.sass */
+.file {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+}
+
+/* line 56, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/mod/diff.sass */
+.file .meta {
+  padding: 5px 10px;
+  text-shadow: 0 1px 0 white;
+  border-bottom: 1px solid #d8d8d8;
+  background-color: #f7f7f7;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+/* line 9, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+.page-header {
+  margin: auto;
+  position: relative;
+  margin-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eeeeee;
+}
+/* line 17, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+.page-header h1 {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 29px;
+}
+
+/* line 31, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
 .button-outline {
   display: inline-block;
   padding: 7px 12px;
@@ -505,104 +608,19 @@
   -webkit-appearance: none;
 }
 
-/* line 99, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 51, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
 .button-group {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 103, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 55, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
 .button-group .button-outline {
   position: relative;
   float: left;
   border-radius: 0;
 }
 
-/* line 108, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 60, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
 .tooltipped {
   position: relative;
-}
-
-/* line 114, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
-.blob-num {
-  padding-left: 10px;
-  padding-right: 10px;
-  vertical-align: top;
-  cursor: pointer;
-  text-align: right;
-  width: 1%;
-  min-width: 50px;
-  border: solid #eeeeee;
-  border-width: 0 1px 0 0;
-}
-
-/* line 125, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
-.blob-num-deletion {
-  background-color: #f7c8c8;
-  border-color: #e9aeae;
-}
-
-/* line 129, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
-.blob-num-addition {
-  background-color: #ceffce;
-  border-color: #b4e2b4;
-}
-
-/* line 133, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
-.blob-code {
-  white-space: pre;
-  overflow: visible;
-  position: relative;
-  padding-left: 10px;
-  padding-right: 10px;
-  vertical-align: top;
-}
-
-/* line 141, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
-.blob-code-hunk {
-  padding-top: 4px;
-  padding-bottom: 4px;
-  background-color: #f8fafd;
-  border-width: 1px 0;
-}
-
-/* line 147, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
-.blob-code-deletion {
-  background-color: #ffdddd;
-}
-
-/* line 150, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
-.blob-code-addition {
-  background-color: #ddffdd;
-}
-
-/* line 153, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
-.blob-num-hunk {
-  background-color: #f0f5fa;
-}
-
-/* line 156, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
-.blob-wrapper {
-  overflow-x: auto;
-  overflow-y: hidden;
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
-}
-
-/* line 162, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
-.file {
-  position: relative;
-  margin-top: 20px;
-  margin-bottom: 15px;
-  border: 1px solid #dddddd;
-  border-radius: 3px;
-}
-
-/* line 169, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
-.file .meta {
-  padding: 5px 10px;
-  text-shadow: 0 1px 0 white;
-  border-bottom: 1px solid #d8d8d8;
-  background-color: #f7f7f7;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
 }
