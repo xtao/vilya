@@ -5,18 +5,18 @@
 {% block sub_content %}
 <div class="panel panel-default">
     <div class="panel-heading">
-    #{{pullrequest.number}} {{pullrequest.name}}
+        #{{pullrequest.number}} {{pullrequest.name}}
     </div>
     <div class="panel-body">
-    <p> {{pullrequest.description}} </p>
+        <p> {{pullrequest.description}} </p>
     </div>
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">
-    Commits
+        Commits
     </div>
     <div class="panel-body">
-    <p> {{commits|length}} commits</p>
+        <p> {{commits|length}} commits</p>
     </div>
     <ul class="list-group table-list">
         {% for commit in commits %}
@@ -26,10 +26,10 @@
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">
-    Files
+        Files
     </div>
     <div class="panel-body">
-    <p> {{diff|length}} files </p>
+        <p> {{diff|length}} files </p>
     </div>
     {% for p in diff %}
     {{ render_patch_file(p) }}

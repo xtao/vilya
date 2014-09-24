@@ -5,52 +5,60 @@
 {%- endblock %}
 
 {% block sub_content %}
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <div>
-            <ol class="breadcrumb">
-                <li><a href="#">{{project.name}}</a></li>
-                <li class="active"></li>
-            </ol>
-        </div>
-        <div class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            Branches: master <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Branches: Action</a></li>
-            <li><a href="#">Branches: Another action</a></li>
-            <li><a href="#">Branches: Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Tags: Separated link</a></li>
-        </ul>
-        </div>
-    </div>
-    <!-- List group -->
-    <ul class="list-group">
-    {% for path in entries %}
-        {% if entries[path].is_tree %}
-        <li class="list-group-item">
-        <span class="glyphicon glyphicon-folder-close"></span>
-        <a href="{{ "/" + project.full_name + "/tree/master/" + path}}">{{entries[path].name}}</a>
-        </li>
-        {% elif entries[path].is_blob %}
-        <li class="list-group-item">
-        <span class="glyphicon glyphicon-file"></span>
-        <a href="{{ "/" + project.full_name + "/blob/master/" + path}}">{{entries[path].name}}</a>
-        </li>
-        {% else %}
-        <li class="list-group-item">
-        <span class="glyphicon glyphicon-credit-card"></span>
-        {{entries[path].name}}
-        </li>
-        {% endif %}
-    {% endfor %}
+<div>
+  <a href="/{{project.full_name}}/find/master" class="btn pull-right">
+    <span class="glyphicon glyphicon-list"></span>
+  </a>
+  <a href="/{{project.full_name}}/compare" class="btn btn-success">
+    <span class="glyphicon glyphicon-wrench"></span>
+  </a>
+  <div class="btn-group">
+    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+      Branches: master <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="#">Branches: Action</a></li>
+      <li><a href="#">Branches: Another action</a></li>
+      <li><a href="#">Branches: Something else here</a></li>
+      <li class="divider"></li>
+      <li><a href="#">Tags: Separated link</a></li>
     </ul>
+  </div>
+  <div>
+    <ol class="breadcrumb">
+      <li><a href="#">{{project.name}}</a></li>
+      <li class="active"></li>
+    </ol>
+  </div>
 </div>
 <div class="panel panel-default">
-<div class="markdown-body">
-{{ readme |safe}}
+  <div class="panel-heading">
+  </div>
+  <!-- List group -->
+  <ul class="list-group">
+    {% for path in entries %}
+    {% if entries[path].is_tree %}
+    <li class="list-group-item">
+    <span class="glyphicon glyphicon-folder-close"></span>
+    <a href="{{ "/" + project.full_name + "/tree/master/" + path}}">{{entries[path].name}}</a>
+    </li>
+    {% elif entries[path].is_blob %}
+    <li class="list-group-item">
+    <span class="glyphicon glyphicon-file"></span>
+    <a href="{{ "/" + project.full_name + "/blob/master/" + path}}">{{entries[path].name}}</a>
+    </li>
+    {% else %}
+    <li class="list-group-item">
+    <span class="glyphicon glyphicon-credit-card"></span>
+    {{entries[path].name}}
+    </li>
+    {% endif %}
+    {% endfor %}
+  </ul>
 </div>
+<div class="panel panel-default">
+  <div class="markdown-body">
+    {{ readme |safe}}
+  </div>
 </div>
 {% endblock %}

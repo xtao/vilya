@@ -5,12 +5,12 @@
   <ul class="list-group">
     {% for i in pullrequests %}
     <li class="list-group-item">
-        <a href="{{ "/" + project.full_name + "/pulls/" + i.number|string }}" class="list-group-item">
-            <h4 class="list-group-item-heading">
-                #{{ i.number }} {{ i.name }}
-            </h4>
-            <p class="list-group-item-text">{{ i.description|truncate(50) }}</p>
-        </a>
+      <a href="{{ "/" + project.full_name + "/pulls/" + i.number|string }}" class="list-group-item">
+      <h4 class="list-group-item-heading">
+        #{{ i.number }} {{ i.name }}
+      </h4>
+      <p class="list-group-item-text">{{ i.description|truncate(50) }}</p>
+      </a>
     </li>
     {% endfor %}
   </ul>
