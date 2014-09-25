@@ -6,22 +6,26 @@
 
 {% block sub_content %}
 <div>
-  <a href="/{{project.full_name}}/find/master" class="btn pull-right">
+  <a href="/{{project.full_name}}/find/{{current_reference}}" class="btn pull-right">
     <span class="glyphicon glyphicon-list"></span>
   </a>
-  <a href="/{{project.full_name}}/compare" class="btn btn-success">
+  <a href="/{{project.full_name}}/compare/{{current_reference}}" class="btn btn-success">
     <span class="glyphicon glyphicon-wrench"></span>
   </a>
   <div class="btn-group">
     <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
-      Branches: master <span class="caret"></span>
+      <small>{{current_reference_type}}: {{current_reference}}</small> <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu">
-      <li><a href="#">Branches: Action</a></li>
-      <li><a href="#">Branches: Another action</a></li>
-      <li><a href="#">Branches: Something else here</a></li>
+      <li role="presentation" class="dropdown-header">Branches:</li>
+      {% for branch in branches %}
+      <li><a href="/{{project.full_name}}/tree/{{branch.name}}"><small>{{branch.name}}</small></a></li>
+      {% endfor %}
       <li class="divider"></li>
-      <li><a href="#">Tags: Separated link</a></li>
+      <li role="presentation" class="dropdown-header">Tags:</li>
+      {% for tag in tags %}
+      <li><a href="/{{project.full_name}}/tree/{{tag.name}}"><small>{{tag.name}}</small></a></li>
+      {% endfor %}
     </ul>
   </div>
   <div>
@@ -40,12 +44,12 @@
     {% if entries[path].is_tree %}
     <li class="list-group-item">
     <span class="glyphicon glyphicon-folder-close"></span>
-    <a href="{{ "/" + project.full_name + "/tree/master/" + path}}">{{entries[path].name}}</a>
+    <a href="{{ "/" + project.full_name + "/tree/" + reference + "/" + path}}">{{entries[path].name}}</a>
     </li>
     {% elif entries[path].is_blob %}
     <li class="list-group-item">
     <span class="glyphicon glyphicon-file"></span>
-    <a href="{{ "/" + project.full_name + "/blob/master/" + path}}">{{entries[path].name}}</a>
+    <a href="{{ "/" + project.full_name + "/blob/" + reference + "/" + path}}">{{entries[path].name}}</a>
     </li>
     {% else %}
     <li class="list-group-item">
