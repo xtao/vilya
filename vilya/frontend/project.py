@@ -164,8 +164,9 @@ def commit_index(u_name, p_name, reference):
     return render_template('projects/commit.html', **context)
 
 
-@route(bp, '/<u_name>/<p_name>/compare/<reference>')
-def compare_index(u_name, p_name, reference):
+@bp.route('/<u_name>/<p_name>/compare')
+@bp.route('/<u_name>/<p_name>/compare/<path:reference>')
+def compare_index(u_name, p_name, reference=None):
     context = {}
     p_user = users.first(name=u_name)
     project = projects.first(name=p_name, owner_id=p_user.id)
@@ -251,6 +252,7 @@ def generate_compare_context(context):
     kwargs['origin'] = to_reference
     kwargs['project'] = project
     pull = pullrequests.new_pullrequest(**kwargs)
+    pull.repository.fetch()
     context['commits'] = pull.repository.commits
     context['diff'] = pull.repository.diff
     #generate_base_context(context)

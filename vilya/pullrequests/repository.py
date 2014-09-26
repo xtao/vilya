@@ -59,11 +59,11 @@ class Repository(object):
         if not repo:
             repo = self.repository
 
-        remotes = repo.remotes
+        remotes = repo.list_remotes()
         rs = [r.name for r in remotes]
         if origin.remote_name not in rs:
             repo.create_remote(origin.remote_name,
-                               origin.repo_path)
+                               origin.repository.path)
         repo.fetch(origin.remote_name)
 
     def sync(self):

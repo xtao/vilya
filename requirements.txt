@@ -40,7 +40,7 @@ sphinxcontrib-httpdomain==1.3.0
 webassets==0.10.1
 wsgiref==0.1.2
 -e git+https://github.com/douban/sina.git@da1d53a5e892a6e00f81cf41416bc4239d87f887#egg=Sina
--e git+https://github.com/douban/ellen.git@b303862b30e09944ce98b46b2c021da95c884f8e#egg=Ellen
+-e git+https://github.com/douban/ellen.git@d61d1e8e5ab29e4de0a251f0348b547c104914a2#egg=Ellen
 -e git+https://github.com/douban/pygit2.git@952060fcec78db643cd0dcd3eb4df4044d8c020a#egg=Pygit2
 -e git+https://github.com/qingfeng/misaka.git@2fbe52692e8f304eea9d8925fd2a857916ff0ea5#egg=Misaka
 -e git+https://github.com/xtao/mikoto.git@6034faf5ef45aea6442eb4fcbc456c457997d0ff#egg=Mikoto

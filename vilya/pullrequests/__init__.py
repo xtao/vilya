@@ -50,7 +50,10 @@ class PullRequestService(Service):
         else:
             repo_name, _, reference = origin.rpartition(':')
             if repo_name:
-                origin_project = projects.get_by_repo_name(repo_name)
+                if '/' in repo_name:
+                    origin_project = projects.get_by_repo_name(repo_name)
+                else:
+                    origin_project = projects.get_by_user_name(repo_name, project)
             origin_project_ref = reference
             origin_project_id = origin_project.id
         c = origin_project.repository.resolve_commit(origin_project_ref)
@@ -64,7 +67,10 @@ class PullRequestService(Service):
         else:
             repo_name, _, reference = upstream.rpartition(':')
             if repo_name:
-                upstream_project = projects.get_by_repo_name(repo_name)
+                if '/' in repo_name:
+                    upstream_project = projects.get_by_repo_name(repo_name)
+                else:
+                    upstream_project = projects.get_by_user_name(repo_name, project)
             upstream_project_ref = reference
             upstream_project_id = upstream_project.id
         c = upstream_project.repository.resolve_commit(upstream_project_ref)
