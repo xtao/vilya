@@ -39,7 +39,7 @@ def index(u_name, p_name):
     p_user = users.first(name=u_name)
     project = projects.first(name=p_name, owner_id=p_user.id)
     context['project'] = project
-    context['reference'] = 'HEAD'
+    context['reference'] = project.repository.head.name
     context['path'] = None
 
     if project.repository.is_empty:
@@ -63,8 +63,10 @@ def fork(u_name, p_name):
     user = current_user
     p_user = users.first(name=u_name)
     project = projects.first(name=p_name, owner_id=p_user.id)
-    # checkout user project
-    fork_project = projects.first(family_id=project.id, owner_id=user.id)
+    context['project'] = project
+    # find user project
+    family_id = project.family_id if project.family_id else project.id
+    fork_project = projects.first(family_id=family_id, owner_id=user.id)
     if fork_project:
         return redirect(url_for('.index',
                                 u_name=user.name,
@@ -89,8 +91,9 @@ def fork(u_name, p_name):
                             p_name=fork_project.name))
 
 
-@route(bp, '/<u_name>/<p_name>/tree/<reference>/<path:path>')
-def tree_index(u_name, p_name, reference, path):
+@bp.route('/<u_name>/<p_name>/tree/<reference>')
+@bp.route('/<u_name>/<p_name>/tree/<reference>/<path:path>')
+def tree_index(u_name, p_name, reference, path=None):
     context = {}
     p_user = users.first(name=u_name)
     project = projects.first(name=p_name, owner_id=p_user.id)
@@ -143,6 +146,7 @@ def commits_index(u_name, p_name, reference, path):
     generate_commits_context(context)
     return render_template('projects/commits.html', **context)
 
+
 @route(bp, '/<u_name>/<p_name>/commit/<reference>')
 def commit_index(u_name, p_name, reference):
     context = {}
@@ -160,6 +164,24 @@ def commit_index(u_name, p_name, reference):
     return render_template('projects/commit.html', **context)
 
 
+@bp.route('/<u_name>/<p_name>/compare')
+@bp.route('/<u_name>/<p_name>/compare/<path:reference>')
+def compare_index(u_name, p_name, reference=None):
+    context = {}
+    p_user = users.first(name=u_name)
+    project = projects.first(name=p_name, owner_id=p_user.id)
+    context['project'] = project
+    context['reference'] = reference
+
+    if project.repository.is_empty:
+        return redirect(url_for('.index',
+                                u_name=u_name,
+                                p_name=p_name))
+
+    generate_compare_context(context)
+    return render_template('projects/compare.html', **context)
+
+
 def generate_tree_context(context):
     project = context['project']
     reference = context['reference']
@@ -173,6 +195,8 @@ def generate_tree_context(context):
                                         path=path)
     context['entries'] = repo.list_entries(reference=reference,
                                            path=path)
+    generate_base_context(context)
+    generate_reference_context(context)
     return context
 
 
@@ -186,6 +210,8 @@ def generate_blob_context(context):
                              'tags': project.repository.list_tags()}
     context['file'] = project.repository.get_rendered_file(reference=reference,
                                                            path=path)
+    generate_base_context(context)
+    generate_reference_context(context)
     return context
 
 
@@ -199,6 +225,8 @@ def generate_commits_context(context):
                              'tags': project.repository.list_tags()}
     context['commits'] = project.repository.list_commits(reference=reference,
                                                          path=path)
+    generate_base_context(context)
+    generate_reference_context(context)
     return context
 
 
@@ -210,4 +238,60 @@ def generate_commit_context(context):
     commit = project.repository.resolve_commit(reference=reference)
     context['commit'] = commit
     context['diff'] = project.repository.diff(commit.hex)
+    generate_base_context(context)
+    generate_reference_context(context)
     return context
+
+
+def generate_compare_context(context):
+    from ..services import pullrequests
+    kwargs = {}
+    project = context['project']
+    reference = context['reference']
+    from_reference = reference
+    to_reference = project.repository.head.name
+    if '...' in reference:
+        from_reference, _, to_reference = reference.partition('...')
+    kwargs['upstream'] = from_reference
+    kwargs['origin'] = to_reference
+    kwargs['project'] = project
+    pull = pullrequests.new_pullrequest(**kwargs)
+    pull.repository.fetch()
+    context['commits'] = pull.repository.commits
+    context['diff'] = pull.repository.diff
+    generate_base_context(context)
+    return context
+
+
+def generate_base_context(context):
+    project = context['project']
+    repository = project.repository
+    branches = repository.list_branches()
+    tags = repository.list_tags()
+    context['branches'] = branches
+    context['tags'] = tags
+
+    if project.upstream_id:
+        context['forked_from_project'] = project.upstream
+
+
+def generate_reference_context(context):
+    project = context['project']
+    repository = project.repository
+    branches = context['branches']
+    tags = context['tags']
+    reference = context['reference']
+    if reference in branches:
+        context['current_reference_type'] = 'branch'
+        context['current_reference'] = reference
+        return
+    elif reference in tags:
+        context['current_reference_type'] = 'tag'
+        context['current_reference'] = reference
+        return
+    t = repository.resolve_type(reference)
+    if t != 'commit':
+        raise
+    c = repository.resolve_commit(reference)
+    context['current_reference_type'] = 'tree'
+    context['current_reference'] = c.hex

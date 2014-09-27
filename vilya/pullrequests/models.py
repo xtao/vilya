@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 from ..core import db
 from .repository import Repository
 
@@ -19,8 +20,8 @@ class PullRequest(db.Model):
     merger_id = db.Column(db.Integer())
     creator_id = db.Column(db.Integer())
     merged_at = db.Column(db.DateTime())
-    created_at = db.Column(db.DateTime())
-    updated_at = db.Column(db.DateTime())
+    created_at = db.Column(db.DateTime(), default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
     def is_local(self):

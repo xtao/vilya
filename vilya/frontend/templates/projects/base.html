@@ -5,19 +5,41 @@
 {{ project.name }}
 {%- endblock %}
 
-{% block content %}
+{% block header -%}
 <div class="page-header">
-    <a href="">{{project.owner.name}}</a>/<a href="">{{project.name}}</a>
-    <div class="btn-group btn-group-sm">
+  <div class="container">
+    <div class="col-sm-12">
+      <div class="btn-group btn-group-sm pull-right">
         <button type="button" class="btn btn-default">Watch</button>
-        <button type="button" class="btn btn-default">Fork</button>
+        <a href="/{{project.full_name}}/fork" class="btn btn-default">Fork</a>
+      </div>
+      <h1>
+        <span class="glyphicon glyphicon-book"></span>
+        <span>
+          <a href="/{{project.owner.name}}">{{project.owner.name}}</a>
+        </span>
+        <span>/</span>
+        <strong>
+          <span>
+            <a href="/{{project.full_name}}">{{project.name}}</a>
+          </span>
+        </strong>
+        {% if forked_from_project %}
+        <span class="fork-flag">
+          <span class="text">forked from <a href="/{{project.full_name}}">{{project.full_name}}</a></span>
+        </span>
+        {% endif %}
+      </h1>
     </div>
+  </div>
 </div>
+{%- endblock %}
+{% block content %}
 <div class="col-sm-2">
   {{ render_project_menu(project, project_menu) }}
 </div>
 <div class="col-sm-10">
-{% block sub_content %}{% endblock %}
+  {% block sub_content %}{% endblock %}
 </div>
 {% endblock %}
 

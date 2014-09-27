@@ -1,0 +1,28 @@
+{% macro render_commit_item(project, commit) -%}
+<li class="list-group-item table-list-item commits-list-item">
+<div class="table-list-cell commit-avatar-cell">
+    <div class="avatar-parent-child">
+        <a href="/xtao" data-skip-pjax="true" rel="author"><img alt="Xu Tao" class="avatar" data-user="1050163" height="36" src="https://avatars2.githubusercontent.com/u/1050163?v=2&amp;s=72" width="36"></a>
+    </div>
+</div>
+<div class="table-list-cell commit-body">
+    <p class="commit-title">{{ commit.message | truncate(35) }}</p>
+    <div class="commit-meta">
+        <a href="/xtao/vilya/commits/master?author=xtao" aria-label="View all commits by Xu Tao" class="commit-author tooltipped tooltipped-s" rel="author">xtao</a>
+        authored <time datetime="2014-09-18T11:21:06+08:00" is="relative-time" title="Sep 18, 2014 11:21 AM GMT+08:00">2 days ago</time>
+    </div>
+    <div class="commit-desc">
+        <pre>Introduce pullrequest.</pre>
+    </div>
+</div>
+<div class="commit-links-cell table-list-cell">
+    <div class="commit-links-group button-group">
+        <button class="js-zeroclipboard button-outline zeroclipboard-button" data-clipboard-text="f4584a2171b67f362997a5a82a35aa986117fdba" data-copied-hint="Copied!" type="button" aria-label="Copy the full SHA"><span class="glyphicon glyphicon-plus"></span></button>
+        <a href="{{ '/' + project.full_name + '/commit/' + commit.hex }}" class="sha button-outline">
+            {{ commit.hex[:7] }}
+        </a>
+    </div>
+    <a href="{{ '/' + project.full_name + '/commit/' + commit.hex }}" aria-label="Browse the code at this point in the history" class="button-outline tooltipped tooltipped-s" rel="nofollow"><span class="glyphicon glyphicon-plus"></span></a>
+</div>
+</li>
+{%- endmacro %}

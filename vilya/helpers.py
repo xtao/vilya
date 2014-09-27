@@ -69,3 +69,11 @@ class JsonSerializer(object):
         for key in hidden:
             rv.pop(key, None)
         return rv
+
+
+# TODO
+class ReferenceConverter(object):
+    # branch
+    # tag
+    # commit
+    pass

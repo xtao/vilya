@@ -18,4 +18,4 @@ def format_md_or_rst(path, content, project_name=None):
         except docutils.ApplicationError:
             pass
 
-    return m.code
+    return m.highlight_code(path)

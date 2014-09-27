@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from ellen.repository import Repository as _Repository
+from .diff import Diff
 
 PULL_REF_H = 'refs/pulls/%s/head'
 PULL_REF_M = 'refs/pulls/%s/merge'
@@ -15,6 +16,10 @@ class Repository(object):
     @property
     def is_empty(self):
         return self.repository.is_empty
+
+    @property
+    def head(self):
+        return self.repository.head
 
     def get_file(self, reference, path):
         blob = self.repository.resolve_blob("%s:%s" % (reference,
@@ -43,7 +48,10 @@ class Repository(object):
         return self.repository.resolve_commit(reference)
 
     def diff(self, reference, from_reference=None):
-        return self.repository.diff(reference, from_reference=from_reference)
+        raw_diff = self.repository.diff(reference, from_reference=from_reference)
+        if raw_diff:
+            return Diff(raw_diff)
+        return raw_diff
 
     def list_remotes(self):
         return self.repository.list_remotes()
@@ -70,6 +78,9 @@ class Repository(object):
 
     def update_reference(self, *k):
         return self.repository.update_reference(*k)
+
+    def resolve_type(self, reference):
+        return self.repository.resolve_type(reference)
 
 def make_git_env(user=None, is_anonymous=False):
     env = {}

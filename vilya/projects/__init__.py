@@ -23,5 +23,18 @@ class ProjectsService(Service):
             return None
         return project
 
+    def get_by_user_name(self, user_name, project):
+        from ..services import users
+        user = users.first(name=user_name)
+        if not user:
+            return None
+        family_id = project.family_id if project.family_id else project.id
+        project = self.first(family_id=family_id, owner_id=user.id)
+        return project
+
+    def get_forked(self, project):
+        id = project.upstream_id if project.upstream_id else project.id
+        return self.gets(family_id=id)
+
     def fork(self, **kw):
         return self.create(**kw)

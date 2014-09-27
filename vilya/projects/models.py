@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 from ..core import db
 from .repository import ProjectRepository
 from sqlalchemy import event
@@ -15,8 +16,8 @@ class Project(db.Model):
     family_id = db.Column(db.Integer)
     owner_id = db.Column(db.Integer)
     issue_counter = db.Column(db.Integer, default=0)
-    created_at = db.Column(db.DateTime)
-    updated_at = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     @property
     def owner(self):
@@ -82,6 +83,10 @@ class Project(db.Model):
 
 
 def after_create(mapper, connection, self):
+    if not self.family_id:
+        self.family_id = self.id
+        self.save()
+
     if self.upstream_id:
         self.fork_repository(self.upstream)
     else:
