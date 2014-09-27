@@ -23,3 +23,6 @@ Berksfile.lock
 instance
 settings.cfg
 .ropeproject
+.ruby-version
+node_modules
+.sass-cache

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 from ..core import db
 
 
@@ -13,6 +14,6 @@ class Issue(db.Model):
     project_id = db.Column(db.Integer())
     creator_id = db.Column(db.Integer())
     closer_id = db.Column(db.Integer())
-    created_at = db.Column(db.DateTime())
-    updated_at = db.Column(db.DateTime())
+    created_at = db.Column(db.DateTime(), default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
     closed_at = db.Column(db.DateTime())

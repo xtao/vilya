@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 from flask_security import UserMixin, RoleMixin
 
 from ..core import db
@@ -46,7 +47,7 @@ class User(UserJsonSerializer, UserMixin, db.Model):
     last_login_ip = db.Column(db.String(100))
     current_login_ip = db.Column(db.String(100))
     login_count = db.Column(db.Integer)
-    registered_at = db.Column(db.DateTime())
+    registered_at = db.Column(db.DateTime(), default=datetime.utcnow)
 
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
