@@ -4,6 +4,13 @@
 
 {% block sub_content %}
 <div class="panel panel-default">
+  <div>
+    {{render_range_editor(upstream_project, upstream_branch, upstream_projects, upstream_branches)}}
+    <span>...</span>
+    {{render_range_editor(origin_project, origin_branch, origin_projects, origin_branches, type="head")}}
+  </div>
+</div>
+<div class="panel panel-default">
   <div class="panel-heading">
     Commits
   </div>
@@ -28,3 +35,28 @@
   {% endfor %}
 </div>
 {% endblock %}
+
+{% macro render_range_editor(current_project, current_branch, projects, branches, type="base") -%}
+  <div class="btn-group">
+    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+      <small>{{type}} fork: {{current_project.full_name}}</small> <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li role="presentation" class="dropdown-header">Choose a {{type}} repository:</li>
+      {% for project in projects %}
+      <li><a><small>{{project.full_name}}</small></a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="btn-group">
+    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+      <small>{{"base" if type == "base" else "compare"}}: {{ current_branch }}</small> <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li role="presentation" class="dropdown-header">Choose a {{type}} branch:</li>
+      {% for branch in branches %}
+      <li><a><small>{{branch.name}}</small></a></li>
+      {% endfor %}
+    </ul>
+  </div>
+{%- endmacro %}

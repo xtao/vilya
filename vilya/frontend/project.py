@@ -6,7 +6,7 @@ from flask import (Blueprint,
                    redirect,
                    url_for)
 from flask.ext.login import current_user
-from ..services import projects, users
+from ..services import projects, users, pullrequests
 from ..forms import NewProjectForm
 from . import route
 
@@ -244,7 +244,6 @@ def generate_commit_context(context):
 
 
 def generate_compare_context(context):
-    from ..services import pullrequests
     kwargs = {}
     project = context['project']
     reference = context['reference']
@@ -259,6 +258,17 @@ def generate_compare_context(context):
     pull.repository.fetch()
     context['commits'] = pull.repository.commits
     context['diff'] = pull.repository.diff
+
+    context['upstream_projects'] = projects.find_forked(project)
+    upstream = project.upstream
+    context['upstream_project'] = upstream
+    context['upstream_branches'] = upstream.repository.list_branches()
+    context['upstream_branch'] = from_reference
+    context['origin_projects'] = projects.find_forked(project)
+    context['origin_project'] = project
+    context['origin_branches'] = project.repository.list_branches()
+    context['origin_branch'] = to_reference
+
     generate_base_context(context)
     return context
 

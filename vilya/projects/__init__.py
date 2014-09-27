@@ -32,9 +32,9 @@ class ProjectsService(Service):
         project = self.first(family_id=family_id, owner_id=user.id)
         return project
 
-    def get_forked(self, project):
+    def find_forked(self, project):
         id = project.upstream_id if project.upstream_id else project.id
-        return self.gets(family_id=id)
+        return self.find(family_id=id)
 
     def fork(self, **kw):
         return self.create(**kw)
