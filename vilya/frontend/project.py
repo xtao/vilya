@@ -196,6 +196,7 @@ def generate_tree_context(context):
     context['entries'] = repo.list_entries(reference=reference,
                                            path=path)
     generate_base_context(context)
+    generate_reference_context(context)
     return context
 
 
@@ -210,6 +211,7 @@ def generate_blob_context(context):
     context['file'] = project.repository.get_rendered_file(reference=reference,
                                                            path=path)
     generate_base_context(context)
+    generate_reference_context(context)
     return context
 
 
@@ -224,6 +226,7 @@ def generate_commits_context(context):
     context['commits'] = project.repository.list_commits(reference=reference,
                                                          path=path)
     generate_base_context(context)
+    generate_reference_context(context)
     return context
 
 
@@ -236,6 +239,7 @@ def generate_commit_context(context):
     context['commit'] = commit
     context['diff'] = project.repository.diff(commit.hex)
     generate_base_context(context)
+    generate_reference_context(context)
     return context
 
 
@@ -255,7 +259,7 @@ def generate_compare_context(context):
     pull.repository.fetch()
     context['commits'] = pull.repository.commits
     context['diff'] = pull.repository.diff
-    #generate_base_context(context)
+    generate_base_context(context)
     return context
 
 
@@ -267,6 +271,15 @@ def generate_base_context(context):
     context['branches'] = branches
     context['tags'] = tags
 
+    if project.upstream_id:
+        context['forked_from_project'] = project.upstream
+
+
+def generate_reference_context(context):
+    project = context['project']
+    repository = project.repository
+    branches = context['branches']
+    tags = context['tags']
     reference = context['reference']
     if reference in branches:
         context['current_reference_type'] = 'branch'

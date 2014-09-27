@@ -24,6 +24,11 @@
             <a href="/{{project.full_name}}">{{project.name}}</a>
           </span>
         </strong>
+        {% if forked_from_project %}
+        <span class="fork-flag">
+          <span class="text">forked from <a href="/{{project.full_name}}">{{project.full_name}}</a></span>
+        </span>
+        {% endif %}
       </h1>
     </div>
   </div>
