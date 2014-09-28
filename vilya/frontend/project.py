@@ -265,7 +265,10 @@ def generate_compare_context(context):
 
     # range editor
     context['upstream_projects'] = projects.find_forked(project)
-    upstream = project.upstream
+    if project.upstream_id:
+        upstream = project.upstream
+    else:
+        upstream = project
     context['upstream_project'] = upstream
     context['upstream_branches'] = upstream.repository.list_branches()
     context['upstream_branch'] = from_reference

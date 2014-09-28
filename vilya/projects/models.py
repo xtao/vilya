@@ -79,6 +79,8 @@ class Project(db.Model):
     @property
     def upstream(self):
         from ..services import projects
+        if not self.upstream_id:
+            return None
         return projects.get(id=self.upstream_id)
 
 
