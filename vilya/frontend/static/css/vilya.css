@@ -594,6 +594,64 @@
 }
 
 /* line 38, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+.full-commit {
+  padding: 8px 8px 0;
+  margin: 10px 0;
+  background: #e6f1f6;
+  border: 1px solid #c5d5dd;
+  border-radius: 3px;
+}
+
+/* line 45, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+.full-commit p.commit-title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #213f4d;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+}
+
+/* line 52, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+.full-commit .commit-desc, .commit-desc-container .commit-desc {
+  display: block;
+  margin: -5px 0 10px;
+}
+
+/* line 56, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+.full-commit .commit-meta {
+  padding: 8px;
+  margin-right: -8px;
+  margin-left: -8px;
+  background: white;
+  border-top: 1px solid #d8e6ec;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+/* line 65, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+.full-commit .sha-block {
+  float: right;
+  margin-left: 15px;
+  font-size: 12px;
+  color: #888888;
+}
+
+/* line 71, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+.full-commit .sha-block > .sha {
+  color: #444444;
+}
+
+/* line 74, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+.full-commit .commit-desc pre, .commit-desc-container .commit-desc pre {
+  max-width: 100%;
+  overflow: visible;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+  word-wrap: break-word;
+  background-color: white;
+  border: 0;
+}
+
+/* line 83, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
 .button-outline {
   display: inline-block;
   padding: 7px 12px;
@@ -615,19 +673,19 @@
   -webkit-appearance: none;
 }
 
-/* line 58, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 103, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
 .button-group {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 62, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 107, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
 .button-group .button-outline {
   position: relative;
   float: left;
   border-radius: 0;
 }
 
-/* line 67, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
+/* line 112, ../../Users/xtao/Work/code/overholt/vilya/frontend/static/sass/vilya.sass */
 .tooltipped {
   position: relative;
 }

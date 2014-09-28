@@ -6,10 +6,27 @@
 {%- endblock %}
 
 {% block sub_content %}
-<div class="panel panel-default">
-  <div class="panel-heading">
+<div class="commit full-commit ">
+  <p class="commit-title">
+  {{commit.message}}
+  </p>
+  <div class="commit-desc"><pre></pre></div>
+  <div class="commit-meta clearfix">
+    <span class="sha-block">commit <span class="sha js-selectable-text">{{ commit.hex }}</span></span>
+    <span class="sha-block" data-pjax="">
+      {% if commit.parents %}
+      {{ commit.parents|length }} parents
+      {% for p in commit.parents %}
+      <a class="sha">{{p.hex[0:8]}}</a>
+      {% endfor %}
+      {% endif %}
+    </span>
+    <div class="authorship">
+      <img alt="" class="avatar" height="24" src="" width="24">
+      <span class="author-name"><span>{{commit.author.name}}</span></span>
+      authored <time datetime="2014-09-26T23:43:30Z" is="relative-time" title="Sep 27, 2014 7:43 AM GMT+08:00">{{commit.author.time}}</time>
+    </div>
   </div>
-  {{ commit.hex }}
 </div>
 
 <div class="panel">

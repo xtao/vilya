@@ -247,8 +247,12 @@ def generate_compare_context(context):
     kwargs = {}
     project = context['project']
     reference = context['reference']
-    from_reference = reference
-    to_reference = project.repository.head.name
+
+    # compare/<to>
+    from_reference = project.repository.head.name
+    to_reference = reference
+
+    # compare/<from...to>
     if '...' in reference:
         from_reference, _, to_reference = reference.partition('...')
     kwargs['upstream'] = from_reference
@@ -259,6 +263,7 @@ def generate_compare_context(context):
     context['commits'] = pull.repository.commits
     context['diff'] = pull.repository.diff
 
+    # range editor
     context['upstream_projects'] = projects.find_forked(project)
     upstream = project.upstream
     context['upstream_project'] = upstream
