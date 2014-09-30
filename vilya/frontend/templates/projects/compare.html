@@ -5,9 +5,9 @@
 {% block sub_content %}
 <div class="panel panel-default">
   <div>
-    {{render_range_editor(upstream_project, upstream_branch, upstream_projects, upstream_branches)}}
+    {{render_range_editor(upstream_project, upstream_branch, upstream_projects_menu, upstream_branches_menu)}}
     <span>...</span>
-    {{render_range_editor(origin_project, origin_branch, origin_projects, origin_branches, type="head")}}
+    {{render_range_editor(origin_project, origin_branch, origin_projects_menu, origin_branches_menu, type="head")}}
   </div>
 </div>
 <div class="panel panel-default">
@@ -43,8 +43,8 @@
     </button>
     <ul class="dropdown-menu" role="menu">
       <li role="presentation" class="dropdown-header">Choose a {{type}} repository:</li>
-      {% for project in projects %}
-      <li><a><small>{{project.full_name}}</small></a></li>
+      {% for r, project in projects %}
+      <li><a href="/{{r}}"><small>{{project.full_name}}</small></a></li>
       {% endfor %}
     </ul>
   </div>
@@ -54,8 +54,8 @@
     </button>
     <ul class="dropdown-menu" role="menu">
       <li role="presentation" class="dropdown-header">Choose a {{type}} branch:</li>
-      {% for branch in branches %}
-      <li><a><small>{{branch.name}}</small></a></li>
+      {% for r, branch in branches %}
+      <li><a href="/{{r}}"><small>{{branch.name}}</small></a></li>
       {% endfor %}
     </ul>
   </div>

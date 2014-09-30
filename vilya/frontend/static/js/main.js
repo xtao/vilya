@@ -3,7 +3,6 @@ var DashboardRouter, Store, Stores, StoresView,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
 Store = (function(_super) {
-
   __extends(Store, _super);
 
   function Store() {
@@ -28,7 +27,6 @@ Store = (function(_super) {
 })(Backbone.Model);
 
 Stores = (function(_super) {
-
   __extends(Stores, _super);
 
   function Stores() {
@@ -44,7 +42,6 @@ Stores = (function(_super) {
 })(Backbone.Collection);
 
 StoresView = (function(_super) {
-
   __extends(StoresView, _super);
 
   function StoresView() {
@@ -71,7 +68,6 @@ StoresView = (function(_super) {
 })(Backbone.View);
 
 DashboardRouter = (function(_super) {
-
   __extends(DashboardRouter, _super);
 
   function DashboardRouter() {
