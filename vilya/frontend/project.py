@@ -7,7 +7,7 @@ from flask import (Blueprint,
                    url_for)
 from flask.ext.login import current_user
 from ..services import projects, users, pullrequests
-from ..forms import NewProjectForm
+from ..forms import NewProjectForm, NewPullRequestForm
 from . import route
 
 bp = Blueprint('project', __name__)
@@ -172,12 +172,15 @@ def compare_index(u_name, p_name, reference=None):
     project = projects.first(name=p_name, owner_id=p_user.id)
     context['project'] = project
     context['reference'] = reference
+    context['u_name'] = u_name
+    context['p_name'] = p_name
 
     if project.repository.is_empty:
         return redirect(url_for('.index',
                                 u_name=u_name,
                                 p_name=p_name))
 
+    context['form'] = NewPullRequestForm()
     generate_compare_context(context)
     return render_template('projects/compare.html', **context)
 

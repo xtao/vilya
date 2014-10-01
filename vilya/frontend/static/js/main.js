@@ -85,3 +85,11 @@ DashboardRouter = (function(_super) {
 $(function() {
   return window.app = new DashboardRouter;
 });
+
+$(function() {
+  console.log("DOM is ready");
+  return $(".js-details-target").on("click", function() {
+    $("div.compare-pr-placeholder").hide();
+    return $("form.pull-request-composer").show();
+  });
+});
