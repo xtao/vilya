@@ -5,6 +5,7 @@ from flask_security import UserMixin, RoleMixin
 
 from ..core import db
 from ..helpers import JsonSerializer
+from ..libs.avatar import get_gravatar_url
 
 
 roles_users = db.Table(
@@ -51,3 +52,7 @@ class User(UserJsonSerializer, UserMixin, db.Model):
 
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
+
+    @property
+    def avatar_url(self):
+        return get_gravatar_url(self.email)

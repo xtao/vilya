@@ -22,11 +22,11 @@ def new():
 
 @route(bp, '/create', methods=['POST'])
 def create():
-    """Create a new course."""
+    """Create a new project."""
     form = NewProjectForm()
     if form.validate_on_submit():
         p = projects.create(owner_id=current_user.id, **form.data)
-        flash('New course was successfully created!', 'info')
+        flash('New project was successfully created!', 'info')
         return redirect(url_for('.index',
                                 u_name=current_user.name,
                                 p_name=p.name))
@@ -39,13 +39,13 @@ def index(u_name, p_name):
     p_user = users.first(name=u_name)
     project = projects.first(name=p_name, owner_id=p_user.id)
     context['project'] = project
-    context['reference'] = project.repository.head.name
     context['path'] = None
 
     if project.repository.is_empty:
         context['project_menu'] = 'Code'
         return render_template('projects/empty.html', **context)
 
+    context['reference'] = project.repository.head.name
     generate_tree_context(context)
     return render_template('projects/tree.html', **context)
 

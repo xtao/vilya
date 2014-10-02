@@ -85,9 +85,9 @@ class Project(db.Model):
 
 
 def after_create(mapper, connection, self):
+    #TODO fix family_id
     if not self.family_id:
         self.family_id = self.id
-        self.save()
 
     if self.upstream_id:
         self.fork_repository(self.upstream)

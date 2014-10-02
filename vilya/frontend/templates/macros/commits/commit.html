@@ -1,28 +1,73 @@
 {% macro render_commit_item(project, commit) -%}
-<li class="list-group-item table-list-item commits-list-item">
+<li class="commit list-group-item table-list-item commits-list-item">
 <div class="table-list-cell commit-avatar-cell">
     <div class="avatar-parent-child">
-        <a href="/xtao" data-skip-pjax="true" rel="author"><img alt="Xu Tao" class="avatar" data-user="1050163" height="36" src="https://avatars2.githubusercontent.com/u/1050163?v=2&amp;s=72" width="36"></a>
+        {% if commit.author %}
+        <a href="/" data-skip-pjax="true" rel="author">
+            <img alt="{{commit.author.name}}" class="avatar" data-user="" height="36" src="{{commit.author_avatar_url}}" width="36">
+        </a>
+        {% else %}
+        <img alt="{{commit.author.name}}" class="avatar" data-user="" height="36" src="{{commit.author_avatar_url}}" width="36">
+        {% endif %}
     </div>
 </div>
 <div class="table-list-cell commit-body">
-    <p class="commit-title">{{ commit.message | truncate(35) }}</p>
+    <p class="commit-title">{{ commit.message_title | truncate(35) }}</p>
     <div class="commit-meta">
-        <a href="/xtao/vilya/commits/master?author=xtao" aria-label="View all commits by Xu Tao" class="commit-author tooltipped tooltipped-s" rel="author">xtao</a>
+        {% if commit.author %}
+        <a href="/{{project.full_name}}/commits/master?author=xtao" aria-label="View all commits by Xu Tao" class="commit-author tooltipped tooltipped-s" rel="author">{{commit.author_name}}</a>
         authored <time datetime="2014-09-18T11:21:06+08:00" is="relative-time" title="Sep 18, 2014 11:21 AM GMT+08:00">2 days ago</time>
+        {% else %}
+        {{ commit.author_name }} authored <time datetime="2014-09-18T11:21:06+08:00" is="relative-time" title="Sep 18, 2014 11:21 AM GMT+08:00">2 days ago</time>
+        {% endif %}
     </div>
     <div class="commit-desc">
-        <pre>Introduce pullrequest.</pre>
+        <pre>{{commit.message_content}}</pre>
     </div>
 </div>
 <div class="commit-links-cell table-list-cell">
-    <div class="commit-links-group button-group">
-        <button class="js-zeroclipboard button-outline zeroclipboard-button" data-clipboard-text="f4584a2171b67f362997a5a82a35aa986117fdba" data-copied-hint="Copied!" type="button" aria-label="Copy the full SHA"><span class="glyphicon glyphicon-plus"></span></button>
-        <a href="{{ '/' + project.full_name + '/commit/' + commit.hex }}" class="sha button-outline">
+    <div class="commit-links-group btn-group">
+        <button class="js-zeroclipboard btn btn-sm btn-default zeroclipboard-button" data-clipboard-text="f4584a2171b67f362997a5a82a35aa986117fdba" data-copied-hint="Copied!" type="button" aria-label="Copy the full SHA">
+          &nbsp;
+          <span class="glyphicon glyphicon-plus"></span>
+          &nbsp;
+        </button>
+        <a href="{{ '/' + project.full_name + '/commit/' + commit.hex }}" class="sha btn btn-sm btn-default">
             {{ commit.hex[:7] }}
         </a>
     </div>
-    <a href="{{ '/' + project.full_name + '/commit/' + commit.hex }}" aria-label="Browse the code at this point in the history" class="button-outline tooltipped tooltipped-s" rel="nofollow"><span class="glyphicon glyphicon-plus"></span></a>
+    <a href="{{ '/' + project.full_name + '/tree/' + commit.hex }}" aria-label="Browse the code at this point in the history" class="btn btn-default btn-sm tooltipped tooltipped-s" rel="nofollow">
+          &nbsp;
+      <span class="glyphicon glyphicon-plus"></span>
+          &nbsp;
+    </a>
 </div>
 </li>
+{%- endmacro %}
+
+{% macro render_full_commit_item(project, commit) -%}
+<div class="commit full-commit">
+  <p class="commit-title">
+  {{commit.message_title}}
+  </p>
+  <div class="commit-desc">
+    <pre>{{commit.message_content}}</pre>
+  </div>
+  <div class="commit-meta clearfix">
+    <span class="sha-block">commit <span class="sha js-selectable-text">{{ commit.hex }}</span></span>
+    <span class="sha-block" data-pjax="">
+      {% if commit.parents %}
+      {{ commit.parents|length }} parents
+      {% for p in commit.parents %}
+      <a class="sha">{{p.hex[0:8]}}</a>
+      {% endfor %}
+      {% endif %}
+    </span>
+    <div class="authorship">
+      <img alt="" class="avatar" height="24" src="{{commit.author_avatar_url}}" width="24">
+      <span class="author-name"><span>{{commit.author_name}}</span></span>
+      authored <time datetime="2014-09-26T23:43:30Z" is="relative-time" title="Sep 27, 2014 7:43 AM GMT+08:00">{{commit.author_time}}</time>
+    </div>
+  </div>
+</div>
 {%- endmacro %}

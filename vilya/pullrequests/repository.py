@@ -112,6 +112,7 @@ class Repository(object):
     @property
     def can_merge(self):
         worktree = self.temp_path
+        errcode = -1
         try:
             user = self.upstream_project.owner
             env = make_git_env(user.name, user.email)
@@ -189,7 +190,7 @@ class Repository(object):
     @property
     def temp_path(self):
         import tempfile
-        if self._temp_path:
+        if hasattr(self, "_temp_path"):
             return self._temp_path
 
         temp_pull_path = os.path.join(TEMP_PATH, "pull")
