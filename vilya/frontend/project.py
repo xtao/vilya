@@ -6,8 +6,8 @@ from flask import (Blueprint,
                    redirect,
                    url_for)
 from flask.ext.login import current_user
-from ..services import projects, users
-from ..forms import NewProjectForm
+from ..services import projects, users, pullrequests
+from ..forms import NewProjectForm, NewPullRequestForm
 from . import route
 
 bp = Blueprint('project', __name__)
@@ -22,11 +22,11 @@ def new():
 
 @route(bp, '/create', methods=['POST'])
 def create():
-    """Create a new course."""
+    """Create a new project."""
     form = NewProjectForm()
     if form.validate_on_submit():
         p = projects.create(owner_id=current_user.id, **form.data)
-        flash('New course was successfully created!', 'info')
+        flash('New project was successfully created!', 'info')
         return redirect(url_for('.index',
                                 u_name=current_user.name,
                                 p_name=p.name))
@@ -39,13 +39,13 @@ def index(u_name, p_name):
     p_user = users.first(name=u_name)
     project = projects.first(name=p_name, owner_id=p_user.id)
     context['project'] = project
-    context['reference'] = project.repository.head.name
     context['path'] = None
 
     if project.repository.is_empty:
         context['project_menu'] = 'Code'
         return render_template('projects/empty.html', **context)
 
+    context['reference'] = project.repository.head.name
     generate_tree_context(context)
     return render_template('projects/tree.html', **context)
 
@@ -172,12 +172,15 @@ def compare_index(u_name, p_name, reference=None):
     project = projects.first(name=p_name, owner_id=p_user.id)
     context['project'] = project
     context['reference'] = reference
+    context['u_name'] = u_name
+    context['p_name'] = p_name
 
     if project.repository.is_empty:
         return redirect(url_for('.index',
                                 u_name=u_name,
                                 p_name=p_name))
 
+    context['form'] = NewPullRequestForm()
     generate_compare_context(context)
     return render_template('projects/compare.html', **context)
 
@@ -244,14 +247,18 @@ def generate_commit_context(context):
 
 
 def generate_compare_context(context):
-    from ..services import pullrequests
     kwargs = {}
     project = context['project']
     reference = context['reference']
-    from_reference = reference
-    to_reference = project.repository.head.name
+
+    # compare/<to>
+    from_reference = project.repository.head.name
+    to_reference = reference
+
+    # compare/<from...to>
     if '...' in reference:
         from_reference, _, to_reference = reference.partition('...')
+    # upstream - base, origin - head
     kwargs['upstream'] = from_reference
     kwargs['origin'] = to_reference
     kwargs['project'] = project
@@ -259,6 +266,58 @@ def generate_compare_context(context):
     pull.repository.fetch()
     context['commits'] = pull.repository.commits
     context['diff'] = pull.repository.diff
+
+    # range editor
+    if ':' in from_reference:
+        name, _, upstream_branch = from_reference.partition(':')
+        upstream = projects.get_by_user_name(name, project)
+    else:
+        upstream_branch = from_reference
+        upstream = project
+    context['upstream_project'] = upstream
+    context['upstream_branch'] = upstream_branch
+    upstream_projects = projects.find_forked(project)
+    context['upstream_projects'] = upstream_projects
+    upstream_projects_menu = []
+    for p in upstream_projects:
+        upstream_projects_menu.append(['%s/compare/%s...%s' % (upstream.full_name, upstream_branch, to_reference), p])
+    context['upstream_projects_menu'] = upstream_projects_menu
+    upstream_branches = upstream.repository.list_branches()
+    context['upstream_branches'] = upstream_branches
+    upstream_branches_menu = []
+    for b in upstream_branches:
+        upstream_branches_menu.append(['%s/compare/%s...%s' % (upstream.full_name, b.name, to_reference), b])
+    context['upstream_branches_menu'] = upstream_branches_menu
+
+    if ':' in to_reference:
+        name, _, origin_branch = to_reference.partition(':')
+        origin = projects.get_by_user_name(name, project)
+    else:
+        origin_branch = to_reference
+        origin = project
+    context['origin_project'] = origin
+    context['origin_branch'] = origin_branch
+    origin_projects = projects.find_forked(project)
+    context['origin_projects'] = origin_projects
+    origin_projects_menu = []
+    for p in origin_projects:
+        if p.id == project.id:
+            branch = origin_branch
+        else:
+            branch = "%s:%s" % (p.owner.name, origin_branch)
+        origin_projects_menu.append(['%s/compare/%s...%s' % (upstream.full_name, from_reference, branch), p])
+    context['origin_projects_menu'] = origin_projects_menu
+    origin_branches = origin.repository.list_branches()
+    context['origin_branches'] = origin_branches
+    origin_branches_menu = []
+    for b in origin_branches:
+        if origin.id == project.id:
+            branch = b.name
+        else:
+            branch = "%s:%s" % (p.owner.name, b.name)
+        origin_branches_menu.append(['%s/compare/%s...%s' % (upstream.full_name, from_reference, branch), b])
+    context['origin_branches_menu'] = origin_branches_menu
+
     generate_base_context(context)
     return context
 

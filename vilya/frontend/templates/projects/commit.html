@@ -1,16 +1,14 @@
 {% extends "projects/base.html" %}
 {% from "macros/diffs/patch.html" import render_patch_file %}
+{% from "macros/commits/commit.html" import render_full_commit_item %}
 
 {% block title -%}
 {{ project.name }}
 {%- endblock %}
 
 {% block sub_content %}
-<div class="panel panel-default">
-  <div class="panel-heading">
-  </div>
-  {{ commit.hex }}
-</div>
+
+{{render_full_commit_item(project, commit)}}
 
 <div class="panel">
   <div class="diff">

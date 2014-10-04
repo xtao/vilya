@@ -63,6 +63,10 @@ class Repository(object):
     def clone(cls, *k, **kw):
         return _Repository.clone(*k, **kw)
 
+    def clone_to(self, path, **kw):
+        self.repository.clone_to(path, **kw)
+        return Repository(path)
+
     @classmethod
     def init(cls, path, bare=True):
         return _Repository.init(path, bare=bare)

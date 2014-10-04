@@ -4,6 +4,7 @@ import os
 from ..libs.git import Repository
 from ..libs.text import format_md_or_rst
 from ..settings import REPO_PATH
+from .commit import Commit
 
 REPO_ROOT_PATH = REPO_PATH
 
@@ -41,3 +42,11 @@ class ProjectRepository(Repository):
     def fork(self, path):
         path = os.path.join(REPO_ROOT_PATH, path)
         return self.repository.clone_to(path, bare=True)
+
+    def list_commits(self, *k, **kw):
+        commits = super(ProjectRepository, self).list_commits(*k, **kw)
+        return [Commit(c) for c in commits]
+
+    def resolve_commit(self, *k, **kw):
+        commit = super(ProjectRepository, self).resolve_commit(*k, **kw)
+        return Commit(commit) if commit else None

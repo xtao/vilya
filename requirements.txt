@@ -39,6 +39,7 @@ six==1.7.3
 sphinxcontrib-httpdomain==1.3.0
 webassets==0.10.1
 wsgiref==0.1.2
+pytz==2014.7
 -e git+https://github.com/douban/sina.git@da1d53a5e892a6e00f81cf41416bc4239d87f887#egg=Sina
 -e git+https://github.com/douban/ellen.git@d61d1e8e5ab29e4de0a251f0348b547c104914a2#egg=Ellen
 -e git+https://github.com/douban/pygit2.git@952060fcec78db643cd0dcd3eb4df4044d8c020a#egg=Pygit2

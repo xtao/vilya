@@ -39,6 +39,14 @@ class Repository(object):
         # TODO origin_remote_name
         return 'refs/remotes/%s/%s' % (self.origin_project.remote_name,
                                        reference)
+    @property
+    def cloned_origin_head_reference(self):
+        reference = self.pullrequest.origin_project_ref
+        if self.pullrequest.is_local():
+            return 'origin/%s' % reference
+        # TODO origin_remote_name
+        return 'refs/remotes/%s/%s' % (self.origin_project.remote_name,
+                                       reference)
 
     @property
     def upstream_head_reference(self):
@@ -111,22 +119,24 @@ class Repository(object):
 
     @property
     def can_merge(self):
+        r = False
         worktree = self.temp_path
         try:
             user = self.upstream_project.owner
             env = make_git_env(user.name, user.email)
-            repo = self.repository.clone(worktree, bare=False,
-                                         branch=self.upstream_project_ref,
-                                         shared=True)
+            repo = self.repository.clone_to(worktree, bare=False,
+                                            branch=self.pullrequest.upstream_project_ref,
+                                            shared=True)
             self.fetch(repo)
-            reference = self.origin_head_reference
-            errcode = repo.merge(reference,
-                                 no_ff=True,
-                                 m='automerge',
-                                 env=env)
+            reference = self.cloned_origin_head_reference
+            repo.merge(reference,
+                       no_ff=True,
+                       m='automerge',
+                       env=env)
+            r = True
         finally:
             shutil.rmtree(worktree)
-        return errcode == 0
+        return r
 
     @property
     def origin_commit_hex(self):
@@ -189,7 +199,7 @@ class Repository(object):
     @property
     def temp_path(self):
         import tempfile
-        if self._temp_path:
+        if hasattr(self, "_temp_path"):
             return self._temp_path
 
         temp_pull_path = os.path.join(TEMP_PATH, "pull")

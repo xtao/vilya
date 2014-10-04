@@ -35,6 +35,51 @@
 
 // COMMIT
 
+.full-commit
+  padding: 8px 8px 0
+  margin: 10px 0
+  background: #e6f1f6
+  border: 1px solid #c5d5dd
+  border-radius: 3px
+
+.full-commit p.commit-title
+  margin: 0 0 8px
+  font-size: 18px
+  font-weight: bold
+  color: #213f4d
+  text-shadow: 0 1px rgba(255,255,255,0.5)
+
+.full-commit .commit-desc, .commit-desc-container .commit-desc
+  display: block
+  margin: -5px 0 10px
+
+.full-commit .commit-meta
+  padding: 8px
+  margin-right: -8px
+  margin-left: -8px
+  background: #fff
+  border-top: 1px solid #d8e6ec
+  border-bottom-right-radius: 3px
+  border-bottom-left-radius: 3px
+
+.full-commit .sha-block
+  float: right
+  margin-left: 15px
+  font-size: 12px
+  color: #888
+
+.full-commit .sha-block>.sha
+  color: #444
+
+.full-commit .commit-desc pre, .commit-desc-container .commit-desc pre
+  max-width: 100%
+  overflow: visible
+  text-shadow: 0 1px rgba(255,255,255,0.5)
+  word-wrap: break-word
+  background-color: #fff
+  border: 0
+
+
 .button-outline
   display: inline-block
   padding: 7px 12px
@@ -66,3 +111,336 @@
 
 .tooltipped
   position: relative
+
+
+// COMPARE
+.previewable-comment-form textarea
+  display: block
+  width: 100%
+  min-height: 100px
+  max-height: 500px
+  padding: 10px
+  resize: vertical
+
+.previewable-comment-form.write-selected .write-content, .previewable-comment-form.preview-selected .preview-content
+  display: block
+
+.previewable-comment-form .write-content, .previewable-comment-form .preview-content
+  display: none
+  padding: 0 10px 10px
+
+.new-discussion-timeline .composer .comment-form-head.tabnav
+  padding-top: 0
+  background-color: #fff
+
+.previewable-comment-form
+  position: relative
+
+.write-content
+  position: relative
+
+.composer-meta
+  float: left
+  width: 20%
+  padding-right: 10px
+  padding-left: 10px
+  text-align: center
+
+.discussion-topic
+  float: left
+  width: 80%
+  border-right: 1px solid #ddd
+
+.discussion-topic-header
+  position: relative
+  padding: 10px
+  word-wrap: break-word
+
+.pull-request-composer
+  position: relative
+  margin-bottom: 15px
+  border: 1px solid #ddd
+  border-radius: 3px
+
+.new-discussion-timeline .composer .comment-form-head.tabnav
+  padding-top: 0
+  background-color: #fff
+
+.new-discussion-timeline .previewable-comment-form .comment-form-head.tabnav
+  padding: 6px 10px 0
+  border-radius: 3px 3px 0 0
+
+.composer .comment-form-textarea
+  height: 200px
+  min-height: 200px
+
+.previewable-comment-form textarea
+  display: block
+  width: 100%
+  min-height: 100px
+  max-height: 500px
+  padding: 10px
+  resize: vertical
+
+.comment-form-textarea
+  width: 100%
+  max-width: 100%
+  height: 100px
+  min-height: 100px
+  margin: 0
+  font-size: 14px
+  line-height: 1.6
+  -webkit-transform: translateZ(0)
+
+.composer-submit
+  position: absolute
+  right: 1%
+  bottom: 10px
+  width: 18%
+
+input[type="text"], textarea
+  min-height: 34px
+  padding: 7px 8px
+  font-size: 13px
+  color: #333
+  vertical-align: middle
+  background-color: #fff
+  background-repeat: no-repeat
+  background-position: right center
+  border: 1px solid #ccc
+  border-radius: 3px
+  outline: none
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.075)
+
+input.input-large
+  padding: 6px 10px
+  font-size: 16px
+
+.input-block
+  display: block
+  width: 100%
+
+.compare-pr-placeholder
+  margin: 10px 0
+  padding: 15px
+  font-size: 14px
+  color: #4c4a42
+  background-color: #fff9ea
+  border-color: #dfd8c2
+  border-radius: 3px
+
+  p
+    margin: 7px 0
+    color: #6d6c60
+
+  .button
+    margin-right: 10px
+    margin-bottom: -2px
+
+  .help-link
+    margin-top: 5px
+    margin-right: -3px
+    padding: 3px
+    color: #9c997d
+    text-decoration: none
+
+.compare-pr .pull-request-composer
+  display: none
+
+// PULLREQUEST
+.timeline-comment-wrapper
+  position: relative
+  padding-left: 64px
+  margin-top: 15px
+  margin-bottom: 15px
+  border-top: 2px solid #fff
+  border-bottom: 2px solid #fff
+
+.timeline-comment-avatar
+  float: left
+  margin-left: -64px
+  border-radius: 3px
+
+.timeline-comment
+  position: relative
+  background-color: #fff
+  border: 1px solid #ddd
+  border-radius: 3px
+
+.timeline-comment-header
+  padding-left: 15px
+  padding-right: 15px
+  color: #999
+  background-color: #f7f7f7
+  border-bottom: 1px solid #eee
+  border-top-left-radius: 3px
+  border-top-right-radius: 3px
+
+.timeline-comment.current-user .timeline-comment-header
+  color: #8e9597
+  background-color: #f2f8fa
+  border-bottom-color: #e1edf1
+
+.timeline-comment-actions
+  float: right
+  margin-right: -5px
+  margin-left: 10px
+
+.timeline-comment-actions .octicon
+  padding: 10px 5px
+  color: inherit
+  opacity: 0.5
+
+.timeline-comment-header-text
+  max-width: 78%
+  padding-top: 10px
+  padding-bottom: 10px
+
+.comment-form-stale
+  margin-top: 0
+
+.context-loader-container .context-loader
+  display: none
+
+.form-content
+  padding: 10px
+  display: none
+
+.comment-form-error, .comment-form-stale
+  display: none
+  margin: 0 10px
+  padding: 5px 10px
+  font-weight: bold
+  color: #900
+  background-color: #ffeaea
+  border: 1px solid #e2a0a0
+
+.context-loader-container .context-loader
+  display: none
+
+.comment-body
+  width: 100%
+  padding: 15px
+  font-size: 14px
+  overflow: visible
+
+.markdown-body
+  overflow: hidden
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif
+  font-size: 16px
+  line-height: 1.6
+  word-wrap: break-word
+
+.comment .context-loader
+  display: none
+
+
+
+.discussion-timeline-actions .merge-pr
+  padding-top: 0
+  border-top: 0
+
+.merge-pr-more-commits
+  margin-top: 10px
+  margin-bottom: 10px
+  margin-left: 64px
+  font-size: 12px
+  color: #777
+
+.branch-action
+  margin-top: 15px
+  margin-bottom: 15px
+  padding-left: 64px
+
+.merge-branch-form
+  padding-left: 64px
+  display: none
+
+.discussion-timeline-actions
+  border-top: 2px solid #f3f3f3
+  background-color: #fff
+
+.merge-pr
+  margin: 20px 0 0
+  padding-top: 10px
+  border-top: 1px solid #ddd
+
+.text-emphasized
+  font-weight: bold
+  color: #333
+
+.branch-action-icon
+  float: left
+  margin-left: -64px
+  width: 48px
+  height: 48px
+  line-height: 48px
+  color: #fff
+  text-align: center
+  border-radius: 3px
+
+.branch-action-body
+  position: relative
+  background-color: #fff
+  border: 1px solid #e5e5e5
+  border-radius: 3px
+
+.branch-status
+  padding: 10px 0
+  border: solid #eee
+  border-width: 0 0 1px
+
+.branch-action-body .merge-message, .branch-action-body .merge-branch-form
+  padding: 15px
+
+.merge-branch-action, .desktop-app-action
+  float: right
+  margin-left: 5px
+
+.merge-branch-heading
+  margin: 0
+
+.merge-branch-description
+  margin-top: 0
+  margin-right: 160px
+  margin-bottom: 0
+  color: #777
+
+.merge-branch-manually
+  display: none
+  margin-top: 14px
+  padding-top: 15px
+  border-top: 1px solid #ddd
+
+.build-status-description
+  display: block
+  margin-left: 15px
+
+.commit-form-avatar
+  float: left
+  margin-left: -64px
+  border-radius: 3px
+
+.commit-form
+  position: relative
+  padding: 15px
+  border: 1px solid #ddd
+  border-radius: 3px
+
+.commit-form .input-block
+  margin-top: 10px
+  margin-bottom: 10px
+
+.commit-form-actions
+  text-align: right
+
+
+textarea
+  overflow: auto
+
+.form-actions
+  padding-bottom: 5px
+  text-align: right
+
+.inline-comment-form .form-actions, .timeline-new-comment .form-actions
+  padding: 0 10px 10px

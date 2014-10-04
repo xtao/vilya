@@ -4,6 +4,76 @@
 
 {% block sub_content %}
 <div class="panel panel-default">
+  <div>
+    {{render_range_editor(upstream_project, upstream_branch, upstream_projects_menu, upstream_branches_menu)}}
+    <span>...</span>
+    {{render_range_editor(origin_project, origin_branch, origin_projects_menu, origin_branches_menu, type="head")}}
+  </div>
+</div>
+{% if form %}
+<div class="panel panel-default compare-pr">
+  <div class="compare-pr-placeholder">
+    <button class="btn btn-primary pull-left js-details-target" type="button">
+      <span class="octicon octicon-git-pull-request"></span>
+      Create pull request
+    </button>
+    <p>
+    Discuss and review the changes in this comparison with others.
+    </p>
+  </div>
+  <form accept-charset="UTF-8" action="{{ url_for('pullrequest.create', u_name=u_name, p_name=p_name) }}" class="pull-request-composer new-discussion-timeline composer clearfix " id="new_pull_request" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="yD6q5+27JYVPOEiiCwJqqVkhwOO7N6ISEEo5U+KPQlmkBiK62HMw7OHBe/IUOr+Pafe61dHD1RoaYdIfKrHQGg=="></div>
+    {{ form.hidden_tag() }}
+    <div class="discussion-topic">
+      <div class="discussion-topic-header">
+        <input autofocus="autofocus" class="input-large input-block input-contrast required valid title js-quick-submit" id="pull_request_title" name="pull_request[title]" placeholder="Title" required="required" size="30" tabindex="1" type="text" value="Test/vilya">
+      </div>
+      <div class="comment-content">
+        <div class="js-previewable-comment-form js-suggester-container previewable-comment-form write-selected" data-preview-url="/preview?repository=13898344">
+          <div class="comment-form-head tabnav">
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="active"><a href="#" class="tabnav-tab active write-tab js-write-tab selected">Write</a></li>
+              <li><a href="#" class="tabnav-tab preview-tab js-preview-tab">Preview</a></li>
+            </ul>
+          </div>
+          <div class="comment-form-error js-comment-form-error" style="display:none">    There was an error creating your PullRequest.
+          </div>
+          <div class="write-content js-write-bucket js-uploadable-container js-upload-markdown-image upload-enabled is-default" data-upload-policy-url="/upload/policies/assets">
+            <textarea name="pull_request[body]" tabindex="1" id="pull_request_body" placeholder="Leave a comment" class="input-contrast comment-form-textarea js-comment-field js-quick-submit js-size-to-fit js-quote-selection-target js-session-resumable js-suggester-field"></textarea>
+          </div>
+          <div class="preview-content">
+            <div class="comment">
+              <div class="comment-content">
+                <div class="comment-body markdown-body">
+                  <p>Nothing to preview</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="suggester-container">
+            <div class="suggester js-suggester js-navigation-container" data-url="/qingfeng/mikoto/suggestions/pull_request">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="composer-meta">
+      <div class="branch-action-state-clean">
+        <span class="mega-octicon octicon-git-pull-request branch-action-icon"></span>
+        <h3 class="merge-branch-heading"><span class="octicon octicon-check"></span> Able to merge.</h3>
+        <p class="merge-branch-description">
+        These branches can be automatically merged.
+        </p>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary composer-submit" tabindex="1" data-disable-invalid="" data-disable-with="">Create pull request</button>
+    <input type="hidden" name="quick_pull" value="">
+    <input type="hidden" name="repo" value="qingfeng/mikoto">
+    <input type="hidden" name="base" value="qingfeng:master">
+    <input type="hidden" name="head" value="xtao:test/vilya">
+  </form>
+</div>
+{% endif %}
+<div class="panel panel-default">
   <div class="panel-heading">
     Commits
   </div>
@@ -28,3 +98,28 @@
   {% endfor %}
 </div>
 {% endblock %}
+
+{% macro render_range_editor(current_project, current_branch, projects, branches, type="base") -%}
+  <div class="btn-group">
+    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+      <small>{{type}} fork: {{current_project.full_name}}</small> <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li role="presentation" class="dropdown-header">Choose a {{type}} repository:</li>
+      {% for r, project in projects %}
+      <li><a href="/{{r}}"><small>{{project.full_name}}</small></a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="btn-group">
+    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+      <small>{{"base" if type == "base" else "compare"}}: {{ current_branch }}</small> <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li role="presentation" class="dropdown-header">Choose a {{type}} branch:</li>
+      {% for r, branch in branches %}
+      <li><a href="/{{r}}"><small>{{branch.name}}</small></a></li>
+      {% endfor %}
+    </ul>
+  </div>
+{%- endmacro %}

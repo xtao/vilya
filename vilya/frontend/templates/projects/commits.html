@@ -6,6 +6,12 @@
 {%- endblock %}
 
 {% block sub_content %}
+<div>
+  <ul class="nav nav-tabs" role="tablist">
+    <li><a href="/{{project.full_name}}/tree/{{reference}}">Files</a></li>
+    <li class="active"><a href="/{{project.full_name}}/commits/{{reference}}">Commits</a></li>
+  </ul>
+</div>
 <div class="panel panel-default">
   <div class="panel-heading">
   </div>
