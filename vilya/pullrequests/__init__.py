@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from ..core import Service
+from ..libs.const import ISSUE_TYPES
 from .models import PullRequest
 
 
@@ -16,6 +17,7 @@ class PullRequestService(Service):
             name=kwargs.get('name'),
             description=kwargs.get('description'),
             creator_id=kwargs.get('creator_id'),
+            type=ISSUE_TYPES['pull'],
         )
 
         # new pull

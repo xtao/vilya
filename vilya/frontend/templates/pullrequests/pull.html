@@ -1,6 +1,7 @@
 {% extends "projects/base.html" %}
 {% from "macros/diffs/patch.html" import render_patch_file %}
 {% from "macros/commits/commit.html" import render_commit_item %}
+{% from "macros/comments/comment.html" import render_comment, render_new_pull_comment %}
 
 {% block sub_content %}
 <div class="panel panel-default">
@@ -22,7 +23,7 @@
         <div class="panel-body">
           <p> {{pullrequest.description}} </p>
         </div>
-        {{ render_comment() }}
+        {{ render_comment(pullrequest.description, pullrequest.issue.creator, pullrequest.issue.created_at) }}
         {{ render_discussion_actions() }}
       </div>
     </div>
@@ -129,101 +130,8 @@
       </form>
     </div>
   </div>
-  <div class="timeline-comment-wrapper timeline-new-comment js-comment-container ">
-    <a href="/xtao"><img alt="Xu Tao" class="timeline-comment-avatar" data-user="1050163" height="48" src="https://avatars1.githubusercontent.com/u/1050163?v=2&amp;s=96" width="48"></a>
-    <form accept-charset="UTF-8" action="/douban/code/pull/50/comment" class="js-new-comment-form" data-remote="true" data-type="json" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="VMx0TGr0Ya8tKEDSjsomA5xfAFFaHS30bt/Jw0/i8j+fI+I1VcrE5AHQ9MpUCjuH7YObGWAzFaMwJcjYhBWpFQ=="></div>
-      <div class="timeline-comment">
-        <input type="hidden" name="issue" value="50">
-        <div class="js-previewable-comment-form js-suggester-container previewable-comment-form write-selected" data-preview-url="/preview?repository=16504076">
-          <div class="comment-form-head tabnav">
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#" class="tabnav-tab write-tab js-write-tab selected">Write</a></li>
-              <li><a href="#" class="tabnav-tab preview-tab js-preview-tab">Preview</a></li>
-            </ul>
-          </div>
-          <div class="comment-form-error js-comment-form-error" style="display:none">    There was an error creating your PullRequest.
-          </div>
-          <div class="write-content js-write-bucket js-uploadable-container js-upload-markdown-image upload-enabled is-default" data-upload-policy-url="/upload/policies/assets">
-            <textarea name="comment[body]" tabindex="1" id="new_comment_field" placeholder="Leave a comment" class="input-contrast comment-form-textarea js-comment-field js-quick-submit js-size-to-fit js-quote-selection-target js-session-resumable js-suggester-field"></textarea>
-          </div>
-          <div class="preview-content">
-            <div class="comment">
-              <div class="comment-content">
-                <div class="comment-body markdown-body">
-                  <p>Nothing to preview</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="suggester-container">
-            <div class="suggester js-suggester js-navigation-container" data-url="/douban/code/suggestions/pull_request/13610624">
-            </div>
-          </div>
-        </div>
-        <div class="form-actions">
-          <div id="partial-new-comment-form-actions" class="js-socket-channel js-updatable-content" data-channel="douban/code:issue:29512662:state" data-url="/douban/code/pull/50/show_partial?partial=form_actions">
-            <button type="submit" class="btn btn-primary" tabindex="2" data-disable-with="" data-disable-invalid="">
-              Comment
-            </button>
-            <button type="submit" name="comment_and_close" value="1" class="btn js-comment-and-button" tabindex="3" data-comment-text="Close and comment" data-disable-with="">
-              Close pull request
-            </button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
+  {{ render_new_pull_comment(project, pull, current_user) }}
 </div>
 {%- endmacro %}
 {% macro render_commits() -%}
 {%- endmacro %}
-{% macro render_comment() -%}
-<div class="timeline-comment-wrapper js-comment-container">
-  <a href="/xtao"><img alt="xu tao" class="timeline-comment-avatar" data-user="1050163" height="48" src="https://avatars1.githubusercontent.com/u/1050163?v=2&amp;s=96" width="48"></a>
-  <div id="issue-40807214" class="comment timeline-comment js-comment js-task-list-container current-user is-task-list-enabled" data-body-version="97c6ff07df2110d5a216983dffba336c">
-    <div class="timeline-comment-header ">
-      <div class="timeline-comment-actions">
-        <a class="octicon octicon-pencil js-comment-edit-button" data-skip-pjax="" href="#" title="edit comment" aria-label="edit comment"></a>
-      </div>
-      <div class="timeline-comment-header-text">
-        <strong>
-          <a href="/xtao" class="author">xtao</a>
-        </strong>
-        commented
-        <a href="#issue-40807214" class="timestamp">
-          <time datetime="2014-08-21t14:01:15z" is="relative-time" title="aug 21, 2014 10:01 pm gmt+08:00">on aug 21</time>
-        </a>
-      </div>
-    </div>
-    <div class="comment-content">
-      <p class="comment-form-stale">
-      the content you are editing has changed. reload the page and try again.
-      </p>
-      <div class="edit-comment-hide">
-        <div class="comment-body markdown-body markdown-format js-comment-body">
-          {{pullrequest.description}}
-        </div>
-      </div>
-      <div class="context-loader">sending request…</div>
-      <div class="form-content js-write-bucket js-suggester-container js-uploadable-container js-upload-markdown-image upload-enabled is-default" data-upload-policy-url="/upload/policies/assets">
-        <form accept-charset="utf-8" action="/qingfeng/mikoto/issues/6" class="js-comment-update" data-remote="" data-type="json" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="_method" type="hidden" value="put"><input name="authenticity_token" type="hidden" value="quvwgztylt0esgm9vv/71g0gpgvilf6ahohvxi4tigcnmdoof2gi4e2jhxkuob0hr15jvubu+j//r3w70xjbrw=="></div>
-          <textarea class="comment-form-textarea js-comment-field js-quick-submit js-task-list-field js-size-to-fit js-suggester-field" id="issue-40807214-body" name="issue[body]" tabindex="1">
-          {{pullrequest.description}}
-          </textarea>
-          <div class="form-actions">
-            <button type="submit" class="btn btn-sm btn-primary" tabindex="1" data-disable-with="">update comment</button>
-            <button type="button" tabindex="1" class="btn btn-sm btn-danger comment-cancel-button js-comment-cancel-button" data-confirm-text="are you sure you want to cancel? you have unsaved changes that will be reverted.">
-              cancel
-            </button>
-          </div>
-          <div class="suggester-container">
-            <div class="suggester js-suggester js-navigation-container" data-url="/qingfeng/mikoto/suggestions/pull_request/20111189">
-            </div>
-          </div>
-      </form></div>
-      <div class="comment-form-error comment-form-bottom js-comment-update-error"></div>
-    </div>
-  </div>
-</div>
-{%- endmacro %}
-

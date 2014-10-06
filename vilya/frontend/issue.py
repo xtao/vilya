@@ -6,10 +6,12 @@ from flask import (Blueprint,
                    flash,
                    redirect,
                    url_for,
-                   abort)
+                   abort,
+                   request)
 from flask.ext.login import current_user
 from ..services import projects, users, issues
-from ..forms import NewIssueForm
+from ..forms import NewIssueForm, NewCommentForm
+from ..libs.const import ISSUE_TYPES
 from . import route
 
 bp = Blueprint('issue', __name__, url_prefix='/<u_name>/<p_name>/issues')
@@ -38,7 +40,7 @@ def index():
     context['project'] = g.project
     context['project_menu'] = 'Issues'
     project = g.project
-    context['issues'] = issues.find(project_id=project.id)
+    context['issues'] = issues.find(project_id=project.id, type=ISSUE_TYPES['default'])
     return render_template('issues/index.html', **context)
 
 
@@ -70,12 +72,35 @@ def create():
 
 
 @route(bp, '/<id>')
-def issue_index(id):
+def issue(id):
     context = {}
     context['u_name'] = g.u_name
     context['p_name'] = g.p_name
     context['project'] = g.project
     context['project_menu'] = 'Issues'
     context['issue'] = issues.first(project_id=g.project.id,
-                                    number=id)
+                                    number=id,
+                                    type=ISSUE_TYPES['default'])
+    context['new_comment_form'] = NewCommentForm()
+    return render_template('issues/issue.html', **context)
+
+
+@route(bp, '/<id>/comments')
+def issue_comment_index(id):
+    context = {}
+    context['u_name'] = g.u_name
+    context['p_name'] = g.p_name
+    context['project'] = g.project
+    context['project_menu'] = 'Issues'
+    issue = issues.first(project_id=g.project.id,
+                         number=id,
+                         type=ISSUE_TYPES['default'])
+    if request.method == 'POST':
+        form = NewCommentForm()
+        if form.validate_on_submit():
+            comment = issue.create_comment(creator=current_user, **form.data)
+    else:
+        pass
+    context['issue'] = issue
+    context['new_comment_form'] = NewCommentForm()
     return render_template('issues/issue.html', **context)

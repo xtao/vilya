@@ -1,12 +1,16 @@
 {% extends "projects/base.html" %}
+{% from "macros/comments/comment.html" import render_issue_actions, render_issue_new_comment, render_issue_description %}
 
 {% block sub_content %}
 <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="panel-heading">
     #{{issue.number}} {{issue.name}}
-    </div>
-    <div class="panel-body">
-    <p> {{issue.description}} </p>
-    </div>
+  </div>
+  <div class="panel-body">
+    <p>{{issue.description}}</p>
+  </div>
+  {{ render_issue_description(project, issue) }}
+  {{ render_issue_actions() }}
+  {{ render_issue_new_comment(project, current_user, issue) }}
 </div>
 {% endblock %}
