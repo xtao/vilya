@@ -15,3 +15,10 @@ class Comment(db.Model):
     creator_id = db.Column(db.Integer())
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    @property
+    def creator(self):
+        from ..services import users
+        if not self.creator_id:
+            return None
+        return users.get(id=self.creator_id)

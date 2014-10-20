@@ -34,6 +34,11 @@ class Issue(db.Model):
             return None
         return users.get(id=self.closer_id)
 
+    @property
+    def actions(self):
+        from ..services import actions
+        return actions.find(issue_id=self.id)
+
     def create_comment(self, description, creator):
         from ..services import actions, comments
         comment = comments.create(description=description,

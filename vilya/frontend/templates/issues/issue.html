@@ -10,7 +10,9 @@
     <p>{{issue.description}}</p>
   </div>
   {{ render_issue_description(project, issue) }}
-  {{ render_issue_actions() }}
-  {{ render_issue_new_comment(project, current_user, issue) }}
+  {{ render_issue_actions(project, issue, actions) }}
+  {% if new_comment_form %}
+  {{ render_issue_new_comment(project, current_user, issue, new_comment_form) }}
+  {% endif %}
 </div>
 {% endblock %}

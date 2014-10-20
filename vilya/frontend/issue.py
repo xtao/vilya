@@ -7,7 +7,8 @@ from flask import (Blueprint,
                    redirect,
                    url_for,
                    abort,
-                   request)
+                   request,
+                   jsonify)
 from flask.ext.login import current_user
 from ..services import projects, users, issues
 from ..forms import NewIssueForm, NewCommentForm
@@ -78,20 +79,21 @@ def issue(id):
     context['p_name'] = g.p_name
     context['project'] = g.project
     context['project_menu'] = 'Issues'
-    context['issue'] = issues.first(project_id=g.project.id,
-                                    number=id,
-                                    type=ISSUE_TYPES['default'])
+    issue = issues.first(project_id=g.project.id,
+                         number=id,
+                         type=ISSUE_TYPES['default'])
+    context['issue'] = issue
     context['new_comment_form'] = NewCommentForm()
+    context['actions'] = issue.actions
     return render_template('issues/issue.html', **context)
 
 
-@route(bp, '/<id>/comments')
+@route(bp, '/<id>/comments', methods=['post'])
 def issue_comment_index(id):
+    # TODO move to api
     context = {}
     context['u_name'] = g.u_name
     context['p_name'] = g.p_name
-    context['project'] = g.project
-    context['project_menu'] = 'Issues'
     issue = issues.first(project_id=g.project.id,
                          number=id,
                          type=ISSUE_TYPES['default'])
@@ -99,8 +101,6 @@ def issue_comment_index(id):
         form = NewCommentForm()
         if form.validate_on_submit():
             comment = issue.create_comment(creator=current_user, **form.data)
-    else:
-        pass
-    context['issue'] = issue
-    context['new_comment_form'] = NewCommentForm()
-    return render_template('issues/issue.html', **context)
+            return redirect(url_for('.issue', id=id, **context))
+            # return jsonify(comment=comment)
+    return redirect(url_for('.issue', id=id, **context))

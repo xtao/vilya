@@ -15,3 +15,15 @@ class Action(db.Model):
     creator_id = db.Column(db.Integer())
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    @property
+    def comment(self):
+        from ..services import comments
+        return comments.get(id=self.type_id)
+
+    @property
+    def creator(self):
+        from ..services import users
+        if not self.creator_id:
+            return None
+        return users.get(id=self.creator_id)
