@@ -1,7 +1,8 @@
 {% extends "projects/base.html" %}
 {% from "macros/diffs/patch.html" import render_patch_file %}
 {% from "macros/commits/commit.html" import render_commit_item %}
-{% from "macros/comments/comment.html" import render_comment, render_new_pull_comment %}
+{% from "macros/comments/comment.html" import render_pull_new_comment %}
+{% from "macros/comments/pullrequest.html" import render_pullrequest_description %}
 
 {% block sub_content %}
 <div class="panel panel-default">
@@ -23,7 +24,7 @@
         <div class="panel-body">
           <p> {{pullrequest.description}} </p>
         </div>
-        {{ render_comment(pullrequest.description, pullrequest.issue.creator, pullrequest.issue.created_at) }}
+        {{ render_pullrequest_description(project, pullrequest) }}
         {{ render_discussion_actions() }}
       </div>
     </div>
@@ -130,7 +131,7 @@
       </form>
     </div>
   </div>
-  {{ render_new_pull_comment(project, pull, current_user) }}
+  {{ render_pull_new_comment(project, pullrequest, current_user) }}
 </div>
 {%- endmacro %}
 {% macro render_commits() -%}

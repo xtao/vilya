@@ -1,0 +1,57 @@
+{% macro render_pullrequest_description(project, pullrequest) -%}
+{% set issue = pullrequest.issue %}
+<div class="timeline-comment-wrapper js-comment-container">
+  <a href="/{{issue.creator.name}}">
+    <img alt="{{issue.creator.name}}" class="timeline-comment-avatar"
+    data-user="{{issue.creator.id}}" height="48" src="{{issue.creator.avatar_url}}" width="48">
+  </a>
+  <div id="issue-40807214" class="comment timeline-comment js-comment js-task-list-container current-user is-task-list-enabled" data-body-version="97c6ff07df2110d5a216983dffba336c">
+    <div class="timeline-comment-header ">
+      <div class="timeline-comment-actions">
+        <a class="octicon octicon-pencil js-comment-edit-button" data-skip-pjax="" href="#" title="edit comment" aria-label="edit comment"></a>
+      </div>
+      <div class="timeline-comment-header-text">
+        <strong>
+          <a href="/{{issue.creator.name}}" class="author">{{issue.creator.name}}</a>
+        </strong>
+        commented
+        <a href="#issue-40807214" class="timestamp">
+          <time datetime="2014-08-21t14:01:15z" is="relative-time" title="aug 21, 2014 10:01 pm gmt+08:00">{{issue.updated_at}}</time>
+        </a>
+      </div>
+    </div>
+    <div class="comment-content">
+      <p class="comment-form-stale">
+      the content you are editing has changed. reload the page and try again.
+      </p>
+      <div class="edit-comment-hide">
+        <div class="comment-body markdown-body markdown-format js-comment-body">
+          {{issue.description}}
+        </div>
+      </div>
+      <div class="context-loader">sending request…</div>
+      <div class="form-content js-write-bucket js-suggester-container js-uploadable-container js-upload-markdown-image upload-enabled is-default" data-upload-policy-url="/upload/policies/assets">
+        <form accept-charset="utf-8" action="/{{project.full_name}}/issues/{{issue.number}}"
+          class="js-comment-update" data-remote="" data-type="json" method="post">
+          <div style="margin:0;padding:0;display:inline">
+            <input name="utf8" type="hidden" value="✓">
+            <input name="_method" type="hidden" value="put">
+            <input name="authenticity_token" type="hidden" value="quvwgztylt0esgm9vv/71g0gpgvilf6ahohvxi4tigcnmdoof2gi4e2jhxkuob0hr15jvubu+j//r3w70xjbrw==">
+          </div>
+          <textarea class="comment-form-textarea js-comment-field js-quick-submit js-task-list-field js-size-to-fit js-suggester-field" id="issue-40807214-body" name="issue[body]" tabindex="1">
+            {{issue.description}}
+          </textarea>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-sm btn-primary" tabindex="1" data-disable-with="">update comment</button>
+            <button type="button" tabindex="1" class="btn btn-sm btn-danger comment-cancel-button js-comment-cancel-button" data-confirm-text="are you sure you want to cancel? you have unsaved changes that will be reverted.">
+              cancel
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="comment-form-error comment-form-bottom js-comment-update-error"></div>
+    </div>
+  </div>
+</div>
+{%- endmacro %}
+

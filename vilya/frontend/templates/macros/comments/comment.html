@@ -1,4 +1,5 @@
 {% macro render_pull_new_comment(project, pull, current_user) -%}
+{% set issue = pull.issue %}
 <div class="timeline-comment-wrapper timeline-new-comment js-comment-container ">
   <a href="/{{current_user.name}}">
     <img alt="{{current_user.name}}" class="timeline-comment-avatar" data-user="{{current_user.id}}" height="48" src="{{current_user.avatar_url}}" width="48">
