@@ -1,8 +1,7 @@
 {% extends "projects/base.html" %}
 {% from "macros/diffs/patch.html" import render_patch_file %}
 {% from "macros/commits/commit.html" import render_commit_item %}
-{% from "macros/comments/comment.html" import render_pull_new_comment %}
-{% from "macros/comments/pullrequest.html" import render_pullrequest_description %}
+{% from "pullrequest/macros/comment.html" import render_pullrequest_description, render_pull_new_comment %}
 
 {% block sub_content %}
 <div class="panel panel-default">
