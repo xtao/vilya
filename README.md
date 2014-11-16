@@ -29,7 +29,7 @@ Generate schema
 ---------------
 
 ```
-alembic revision --autogenerate -m “blabla...”
+alembic revision --autogenerate -m "blabla..."
 alembic upgrade head
 ```
 
@@ -49,7 +49,7 @@ gem install sass chunky_png fssm compass
 
 Maybe you need:
 
-`RBENV_VERSION=”2.0.0-p247” python wsgi.py`
+`RBENV_VERSION="2.0.0-p247" python wsgi.py`
 
 ### rbenv
 
@@ -58,11 +58,11 @@ https://github.com/sstephenson/rbenv
 ```
 curl https://raw.githubusercontent.com/fesplugas/rbenv-installer/master/bin/rbenv-installer | bash
 export PATH=”$HOME/.rbenv/bin:$PATH”
-eval “$(rbenv init -)”
+eval "$(rbenv init -)"
 unset RUBYOPT
-echo ‘export PATH=”$HOME/.rbenv/bin:$PATH”’ >> ~/.bash_profile
-echo ‘eval “$(rbenv init -)”’ >> ~/.bash_profile
-echo ‘unset RUBYOPT’ >> ~/.bash_profile
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+echo 'unset RUBYOPT' >> ~/.bash_profile
 rbenv install 2.0.0-p247
 rbenv rehash
 ```
