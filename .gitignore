@@ -28,3 +28,4 @@ settings.cfg
 .ruby-version
 node_modules
 .sass-cache
+repos/
