@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 DEBUG = True
+
+APP_PORT = 5000
+
 SECRET_KEY = 'super-secret-key'
 
 SQLALCHEMY_DATABASE_URI = 'mysql://root@localhost:3306/vilya1'

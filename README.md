@@ -7,32 +7,30 @@ Quickstart
 ----------
 
 ```
-$ virtualenv venv
-$ source venv/bin/activate
-$ pip install -r requirements.txt
-$ mysql -uroot
-$ create database vilya1
-$ alembic upgrade head
-$ python manager.py create_user
-$ python wsgi.py
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt
+echo "create database vilya1" | mysql -uroot
+alembic upgrade head
+python manage.py create_user
+python wsgi.py
 ```
 
 Override settings configuration
 -------------------------------
 
 ```
-$ mkdir /path/to/vilya/instance
-$ cd /path/to/vilya/instance
-$ touch settings.cfg
-override configurations in settings.cfg
+mkdir -p instance
+cp vilya/settings.cfg.example instance/settings.cfg
+# then override configurations in instance/settings.cfg
 ```
 
 Generate schema
 ---------------
 
 ```
-$ alembic revision --autogenerate -m “blabla...”
-$ alembic upgrade head
+alembic revision --autogenerate -m “blabla...”
+alembic upgrade head
 ```
 
 Frontend

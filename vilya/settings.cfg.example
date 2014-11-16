@@ -1,0 +1,2 @@
+DEBUG = True
+APP_PORT = 5000
