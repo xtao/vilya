@@ -1,0 +1,4 @@
+DEBUG = True
+APP_PORT = 5000
+REPO_PATH = './repos'
+TEMP_PATH = './temp'

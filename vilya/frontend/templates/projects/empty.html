@@ -11,7 +11,7 @@
     git init
     git add README.md
     git commit -m "first commit"
-    git remote add origin git@github.com:xtao/how-code-works-slides.git
+    git remote add origin http://localhost:{{ config.APP_PORT }}/{{ project.full_name }}
     git push -u origin master
 </pre>
 </div>

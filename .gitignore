@@ -15,6 +15,8 @@ build/
 docs/_build
 *.backup*
 venv
+*.swp
+tmp
 
 # Project Files
 Gemfile*
@@ -26,3 +28,4 @@ settings.cfg
 .ruby-version
 node_modules
 .sass-cache
+repos/
